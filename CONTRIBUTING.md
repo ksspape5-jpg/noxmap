@@ -18,7 +18,7 @@ L'API a besoin d'un fichier `server/.env` contenant `GEMINI_API_KEY=...` (jamais
 src/
 ├── main.tsx              Point d'entrée : charge index.css puis App
 ├── App.tsx               Routeur (BrowserRouter)
-├── index.css             Thème Tailwind, reset et utilitaires globaux
+├── index.css             Thème Tailwind (@theme : couleurs, breakpoint) et styles de base
 ├── app/                  Coquille de l'application
 │   ├── AppLayout.tsx     En-tête, alerte, pages, pied de page, chat
 │   └── AppRoutes.tsx     Déclaration des routes
@@ -32,7 +32,9 @@ src/
 │   ├── weather-alert/    Bandeau de vigilance pluie
 │   └── assistant/        Chat flottant (hook, appel API, prompt)
 └── shared/               Code utilisé par plusieurs fonctionnalités
-    ├── ui/               Button, PageTitle, DemoBadge, Filters
+    ├── ui/               Button, IconButton, Eyebrow, SectionHeading, PageTitle,
+    │                     DemoBadge, Filters, ContentPage
+    ├── lib/cn.ts         Fusion de classes Tailwind (tailwind-merge)
     ├── flood/            Types, niveaux d'eau, LevelBadge, données démo
     ├── map/              MapCanvas (carte Leaflet réutilisable)
     └── roadmap/          Section « Feuille de route »
@@ -44,8 +46,7 @@ Structure type d'une fonctionnalité :
 features/<nom>/
 ├── index.ts              API publique (export par défaut de la page)
 ├── <Nom>Page.tsx         Composant de page : état + assemblage
-├── <nom>.css             Styles de la fonctionnalité
-├── components/           Composants internes (+ leur CSS si besoin)
+├── components/           Composants internes
 ├── hooks/  api/  types.ts  data.ts   (selon les besoins)
 ```
 
@@ -53,10 +54,20 @@ features/<nom>/
 
 1. **Une fonctionnalité n'importe jamais une autre fonctionnalité.** Si deux fonctionnalités ont besoin du même code, il va dans `src/shared/`.
 2. **On importe une fonctionnalité via son `index.ts`** (`import MapPage from "@/features/map"`), jamais un fichier interne.
-3. **Les styles vivent à côté de leur composant** et sont importés par lui. Préfixez les classes par le nom du composant (`.rank-item`, `.chat-popup`…) pour éviter les collisions.
+3. **Pas de fichier CSS par composant** : les styles s'écrivent en classes Tailwind dans le JSX (voir « Styles » ci-dessous).
 4. **`src/shared/` et `src/index.css` sont partagés** : toute modification doit être signalée à l'équipe dans la PR.
-5. **Fichiers courts** : au-delà d'environ 200 lignes pour un composant (500 pour un CSS), découpez-le.
+5. **Fichiers courts** : au-delà d'environ 150 lignes pour un composant, découpez-le.
 6. Utilisez l'alias `@/` pour importer depuis `src/` et exportez les composants par défaut.
+
+## Styles (Tailwind CSS v4)
+
+- **Couleurs : uniquement les tokens du thème** (`bg-primary`, `text-muted`, `border-border`, `bg-ankle`…), définis dans `@theme` de `src/index.css`. Pas de code hexadécimal dans les composants : changer de palette = modifier ce bloc. Sur fond sombre, utilisez du blanc translucide (`text-white/70`).
+- **Mobile : `max-md:`** (le breakpoint `md` vaut 800px dans ce projet).
+- **Espacements** : Tailwind v4 accepte tout multiple de 0.25, avec 1 = 4px (`p-4.5` = 18px, `w-87.5` = 350px) ; les crochets (`text-[13px]`) seulement si nécessaire.
+- **Classes conditionnelles** : `cn()` de `@/shared/lib/cn`, qui résout aussi les conflits (`cn("px-5", "px-2")` → `px-2`). Les composants partagés acceptent `className` pour être ajustés.
+- **Jamais de nom de classe construit dynamiquement** (`bg-${level}`) : Tailwind ne le détecterait pas. Utilisez un objet (`LEVEL_BG[level]`).
+- Listes de classes longues : découpez-les dans `cn("…base…", "…mobile…")` ou une constante nommée.
+- Ajouter un token (couleur, ombre) dans `src/index.css` est une modification partagée : signalez-la dans la PR.
 
 ## Ajouter une page
 
