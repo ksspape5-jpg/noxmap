@@ -1,0 +1,10 @@
+{
+  "description": "Enables Dakar residents to report and view flood-prone areas on an interactive map, aiding community awareness and helping authorities prioritize responses.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
