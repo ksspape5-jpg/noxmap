@@ -38,7 +38,7 @@ export default function MiniMapVisual() {
         <div key={position} className={cn(ROAD_CLASSES, position)} />
       ))}
       {DISTRICTS.map(({ name, position }) => (
-        <span key={name} className={cn("absolute z-2 text-[10px] font-bold tracking-[.08em] text-[#80908a] uppercase", position)}>
+        <span key={name} className={cn("absolute z-2 text-[10px] font-bold tracking-[.08em] text-muted/80 uppercase", position)}>
           {name}
         </span>
       ))}

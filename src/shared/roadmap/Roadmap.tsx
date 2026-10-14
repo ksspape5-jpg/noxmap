@@ -20,7 +20,7 @@ export default function Roadmap({ className }: { className?: string }) {
       )}
     >
       <SectionHeading eyebrow="Feuille de route" title="Ce que nous voulons construire ensuite">
-        <span className="rounded-full bg-primary px-2.75 py-1.75 text-[10px] font-extrabold tracking-[.08em] text-white uppercase">
+        <span className="rounded-full bg-accent px-2.75 py-1.75 text-[10px] font-extrabold tracking-[.08em] text-night uppercase">
           Bientôt
         </span>
       </SectionHeading>

@@ -7,7 +7,7 @@ export default function Logo() {
       aria-label="Points Noirs Dakar"
     >
       <MapPin size={25} strokeWidth={2.5} />
-      <Waves size={12} strokeWidth={3} className="absolute bottom-1.75 left-3.25" />
+      <Waves size={12} strokeWidth={3} className="absolute bottom-1.75 left-3.25 text-accent" />
     </span>
   );
 }

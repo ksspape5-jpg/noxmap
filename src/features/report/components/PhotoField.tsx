@@ -31,7 +31,7 @@ export default function PhotoField({ hasPhoto, onChange }: PhotoFieldProps) {
           <img className="h-11 w-13.5 rounded-[7px] object-cover" src={DEMO_PHOTO_URL} alt="Aperçu de la photo ajoutée" />
           <PhotoText title="Photo ajoutée" hint="Les visages et plaques seront floutés." />
           <button
-            className="grid size-9 place-items-center rounded-lg border-0 bg-[#f4e9e9] text-[#933b3b]"
+            className="grid size-9 place-items-center rounded-lg border-0 bg-danger-soft text-danger"
             aria-label="Retirer la photo"
             onClick={() => onChange(false)}
           >

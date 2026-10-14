@@ -5,7 +5,7 @@ type StepState = "active" | "done" | "todo";
 
 const BULLET_STATE: Record<StepState, string> = {
   active: "border-white bg-white text-primary-dark",
-  done: "border-[#7eb09f] bg-[#7eb09f] text-white",
+  done: "border-accent bg-accent text-night",
   todo: "",
 };
 
@@ -17,7 +17,7 @@ export default function AssuranceStep({ state, marker, title, hint }: AssuranceS
     <li className={cn("flex items-center gap-2.75", state === "todo" ? "opacity-48" : "opacity-100")}>
       <span
         className={cn(
-          "grid size-7.75 flex-none place-items-center rounded-full border border-[#708a82] text-[10px] font-extrabold",
+          "grid size-7.75 flex-none place-items-center rounded-full border border-white/35 text-[10px] font-extrabold",
           BULLET_STATE[state],
         )}
       >
@@ -25,7 +25,7 @@ export default function AssuranceStep({ state, marker, title, hint }: AssuranceS
       </span>
       <div className="flex flex-col">
         <b className="text-[11px]">{title}</b>
-        <small className="mt-0.75 text-[9px] text-[#9eb2ac]">{hint}</small>
+        <small className="mt-0.75 text-[9px] text-white/60">{hint}</small>
       </div>
     </li>
   );

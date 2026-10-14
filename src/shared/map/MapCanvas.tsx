@@ -44,7 +44,7 @@ export default function MapCanvas({ onSelect, selected, newReport, compact = fal
         );
       })}
       {newReport && (
-        <CircleMarker center={NEW_REPORT_POSITION} radius={19} pathOptions={{ fillColor: "#421C22", color: "#fff", weight: 6, fillOpacity: 1 }}>
+        <CircleMarker center={NEW_REPORT_POSITION} radius={19} pathOptions={{ fillColor: levelMeta.waist.color, color: "#fff", weight: 6, fillOpacity: 1 }}>
           <Popup><b>Nouveau point noir</b><br />Votre signalement vient d'être ajouté.</Popup>
         </CircleMarker>
       )}

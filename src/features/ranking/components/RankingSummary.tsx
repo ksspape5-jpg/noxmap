@@ -1,7 +1,7 @@
 import { ArrowRight, BarChart3 } from "lucide-react";
 import { Button } from "@/shared/ui";
 
-const TEXT = "mt-2 text-[11px] leading-[1.65] text-[#c0cfca]";
+const TEXT = "mt-2 text-[11px] leading-[1.65] text-white/75";
 
 export default function RankingSummary({ onExplore }: { onExplore: () => void }) {
   return (

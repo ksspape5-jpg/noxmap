@@ -20,7 +20,7 @@ export default function LevelCard({ level, selected, onClick }: LevelCardProps) 
         CARD_CLASSES,
         selected && "border-primary ring-2 ring-primary-soft",
         // La bordure du point noir reste visible, même survolé ou sélectionné.
-        critical && "border-[#bdaeb0] bg-[#fdfafa] hover:border-[#bdaeb0]",
+        critical && "border-waist/30 bg-waist/2 hover:border-waist/30",
       )}
       onClick={onClick}
     >

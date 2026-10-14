@@ -15,7 +15,7 @@ export default function ReportDetail({ reportId, onClose }: ReportDetailProps) {
   const report = reports.find((item) => item.id === reportId)!;
   return (
     <aside className={SHEET_CLASSES}>
-      <div className="mx-auto my-2.25 hidden h-1 w-10.5 rounded-full bg-[#ced6d2] max-md:block" />
+      <div className="mx-auto my-2.25 hidden h-1 w-10.5 rounded-full bg-border-strong/60 max-md:block" />
       <IconButton className="absolute top-2.25 right-2.25 z-1 bg-white/94 max-md:top-3" aria-label="Fermer" onClick={onClose}>
         <X size={19} />
       </IconButton>

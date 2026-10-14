@@ -11,33 +11,35 @@
 
   --font-sans: "Plus Jakarta Sans", sans-serif;
 
-  --color-primary: #3d5f58;
-  --color-primary-dark: #29443f;
-  --color-primary-soft: #e7efec;
-  --color-ink: #192521;
-  --color-muted: #64736e;
-  --color-canvas: #f5f7f5;
-  --color-subtle: #edf1ef;
-  --color-border: #dce4e0;
-  --color-border-strong: #aebdb7;
-  --color-night: #1e2d29;
-  --color-night-muted: #aab8b3;
+  /* Palette « Teranga » : vert Sénégal profond, touches d'or, fond sable clair. */
+  --color-primary: #00704a;
+  --color-primary-dark: #00553a;
+  --color-primary-soft: #e5f4ee;
+  --color-accent: #e0a500;
+  --color-ink: #10231c;
+  --color-muted: #5b6b63;
+  --color-canvas: #f6f7f3;
+  --color-subtle: #edf0ea;
+  --color-border: #dde3dc;
+  --color-border-strong: #b2bfb5;
+  --color-night: #0d2a1f;
+  --color-night-muted: #a7bcb1;
 
-  --color-success: #247554;
-  --color-success-soft: #dff2e9;
-  --color-danger: #9f3131;
-  --color-danger-soft: #fff0f0;
+  --color-success: #1f7a4d;
+  --color-success-soft: #ddf3e6;
+  --color-danger: #b42318;
+  --color-danger-soft: #fef0ef;
   --color-weather-soft: #eeecff;
   --color-weather-ink: #332b78;
 
-  /* Niveaux d'eau */
-  --color-ankle: #d89516;
-  --color-ankle-soft: #fff1c9;
-  --color-ankle-ink: #775000;
-  --color-knee: #db5d27;
-  --color-knee-soft: #ffe2d4;
-  --color-knee-ink: #8a3211;
-  --color-waist: #421c22;
+  /* Niveaux d'eau (à garder synchronisés avec levelMeta dans src/shared/flood/levels.ts) */
+  --color-ankle: #f2c230;
+  --color-ankle-soft: #fff4cc;
+  --color-ankle-ink: #7a5600;
+  --color-knee: #e8590c;
+  --color-knee-soft: #ffe4d3;
+  --color-knee-ink: #8f3207;
+  --color-waist: #2b0a0f;
 
   --shadow-brand: 0 8px 20px color-mix(in srgb, var(--color-primary) 18%, transparent);
   --shadow-brand-lg: 0 8px 24px color-mix(in srgb, var(--color-primary) 25%, transparent);

@@ -15,7 +15,7 @@ export default function RankItem({ item, index, onClick }: RankItemProps) {
     >
       <span
         className={cn(
-          "text-[13px] font-extrabold text-[#8d9995]",
+          "text-[13px] font-extrabold text-muted/80",
           index < 3 && "grid size-8.5 place-items-center rounded-[10px] bg-primary-soft text-primary",
         )}
       >
