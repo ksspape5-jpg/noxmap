@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LocateFixed, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
+import { cn } from "@/shared/lib/cn";
 import { MapCanvas } from "@/shared/map";
 import { Button, Filters } from "@/shared/ui";
 import Legend from "./components/Legend";
+import LiveDot from "./components/LiveDot";
+import LocateButton from "./components/LocateButton";
 import ReportDetail from "./components/ReportDetail";
 import ReportsPanel from "./components/ReportsPanel";
 import SuccessToast from "./components/SuccessToast";
-import "./map.css";
 
 export default function MapPage() {
   const navigate = useNavigate();
@@ -16,16 +18,27 @@ export default function MapPage() {
   const [selected, setSelected] = useState<number | null>(location.state?.newReport ? 1 : null);
   const [legendOpen] = useState(true);
   const newReport = Boolean(location.state?.newReport);
+  // Sur mobile, la fiche ouverte recouvre le bas de la carte : on masque les contrôles flottants.
+  const hiddenUnderSheet = selected ? "max-md:hidden" : undefined;
   return (
-    <main className="map-page">
+    <main className="grid h-screen grid-cols-[380px_1fr] overflow-hidden bg-white pt-18 max-md:block max-md:h-[calc(100vh-72px)] max-md:p-0">
       <ReportsPanel filter={filter} onFilterChange={setFilter} selected={selected} onSelect={setSelected} />
-      <section className="map-stage">
+      <section className="relative min-w-0 max-md:size-full">
         <MapCanvas onSelect={setSelected} selected={selected} newReport={newReport} />
-        <div className="map-top-mobile"><Filters active={filter} onChange={setFilter} /></div>
-        <div className="map-status"><span className="live-dot" /> 72 points actifs <small>démo</small></div>
-        {legendOpen && <Legend />}
-        <button className="locate-btn" aria-label="Ma position"><LocateFixed size={20} /><span>Ma position</span></button>
-        <Button className="floating-report" onClick={() => navigate("/signaler")}><Plus size={20} /> Ici c'est inondé</Button>
+        <div className="absolute inset-x-3 top-3 z-400 hidden max-md:block">
+          <Filters className="bg-subtle/96 shadow-[0_3px_15px_rgba(0,0,0,.13)]" active={filter} onChange={setFilter} />
+        </div>
+        <div className="absolute top-4.5 left-4.5 z-400 rounded-[10px] bg-white/96 px-3.25 py-2.5 text-[11px] font-bold shadow-[0_4px_16px_rgba(0,0,0,.12)] max-md:top-16.75 max-md:left-3">
+          <LiveDot /> 72 points actifs <small className="font-medium text-muted">démo</small>
+        </div>
+        {legendOpen && <Legend className={hiddenUnderSheet} />}
+        <LocateButton className={hiddenUnderSheet} />
+        <Button
+          className={cn("absolute right-6 bottom-6 z-400 max-md:right-3 max-md:bottom-6.25 max-md:min-h-13", hiddenUnderSheet)}
+          onClick={() => navigate("/signaler")}
+        >
+          <Plus size={20} /> Ici c'est inondé
+        </Button>
         {selected && <ReportDetail reportId={selected} onClose={() => setSelected(null)} />}
         {newReport && !selected && <SuccessToast />}
       </section>
