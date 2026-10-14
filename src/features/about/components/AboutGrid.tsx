@@ -9,9 +9,15 @@ const ABOUT_ITEMS = [
 
 export default function AboutGrid() {
   return (
-    <section className="about-grid">
+    <section className="grid grid-cols-2 gap-3.5 max-md:grid-cols-1">
       {ABOUT_ITEMS.map(({ icon: Icon, title, text }) => (
-        <article key={title}><span><Icon /></span><h2>{title}</h2><p>{text}</p></article>
+        <article key={title} className="rounded-2xl border border-border bg-white p-6.25">
+          <span className="mb-5.5 grid size-10.75 place-items-center rounded-xl bg-primary-soft text-primary">
+            <Icon />
+          </span>
+          <h2 className="text-lg">{title}</h2>
+          <p className="mt-2 text-xs leading-[1.7] text-muted">{text}</p>
+        </article>
       ))}
     </section>
   );
