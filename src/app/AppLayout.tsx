@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
-import ChatFlottant from "@/components/ChatFlottant";
-import "@/components/ChatFlottant.css";
+import ChatFlottant from "@/features/assistant";
 import WeatherAlert from "@/features/weather-alert";
 import { Footer, Header, MobileNav } from "@/layout";
 import AppRoutes from "./AppRoutes";
