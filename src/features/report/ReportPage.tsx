@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Level } from "@/shared/flood";
+import { cn } from "@/shared/lib/cn";
+import FormPage from "./components/FormPage";
 import LevelStep from "./components/LevelStep";
 import LocationStep from "./components/LocationStep";
 import ProgressHeader from "./components/ProgressHeader";
 import ReportAssurance from "./components/ReportAssurance";
 import ReportConfirmation from "./components/ReportConfirmation";
 import type { ReportStep } from "./types";
-import "./report.css";
 
 const SUBMIT_DELAY_MS = 800;
+
+// Carte blanche à deux colonnes (formulaire + panneau latéral) ; une seule colonne sur mobile.
+const SHELL_CLASSES = cn(
+  "grid w-full max-w-245 grid-cols-[minmax(0,1fr)_330px] overflow-hidden rounded-[20px] border border-border bg-white",
+  "shadow-[0_15px_40px_rgba(33,51,46,.07)]",
+  "max-md:block max-md:overflow-visible max-md:border-0 max-md:shadow-none",
+);
 
 export default function ReportPage() {
   const navigate = useNavigate();
@@ -59,9 +67,9 @@ export default function ReportPage() {
   }
 
   return (
-    <main className="form-page">
-      <section className="form-shell">
-        <div className="form-main">
+    <FormPage>
+      <section className={SHELL_CLASSES}>
+        <div className="p-8 max-md:px-1 max-md:py-2">
           <ProgressHeader step={step} onBack={() => (step === 2 ? setStep(1) : navigate(-1))} />
           {step === 1 ? (
             <LocationStep locationSet={locationSet} error={error} onLocate={chooseLocation} onContinue={next} />
@@ -81,6 +89,6 @@ export default function ReportPage() {
         </div>
         <ReportAssurance step={step} />
       </section>
-    </main>
+    </FormPage>
   );
 }
