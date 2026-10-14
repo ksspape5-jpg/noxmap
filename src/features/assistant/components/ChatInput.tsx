@@ -14,15 +14,19 @@ export default function ChatInput({ disabled, onSend }: ChatInputProps) {
   };
 
   return (
-    <form className="chat-input-area" onSubmit={handleSubmit}>
+    <form className="flex gap-1.5 border-t border-border bg-white p-2.5" onSubmit={handleSubmit}>
       <input
-        className="chat-input"
+        className="flex-1 rounded-[10px] border border-border px-2.5 py-2 text-xs outline-none focus:border-primary"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Posez votre question..."
         disabled={disabled}
       />
-      <button className="chat-send" type="submit" disabled={disabled || !input.trim()}>
+      <button
+        className="flex size-9 items-center justify-center rounded-[10px] border-none bg-primary text-white disabled:cursor-not-allowed disabled:opacity-50"
+        type="submit"
+        disabled={disabled || !input.trim()}
+      >
         <Send size={18} />
       </button>
     </form>

@@ -8,17 +8,20 @@ const SUGGESTIONS = [
   "Comment utiliser la carte ?",
 ];
 
+const SUGGESTION_CLASS =
+  "rounded-lg border border-border bg-white px-2.5 py-1.5 text-[10px] text-ink transition-all duration-150 ease-[ease] hover:border-primary hover:bg-primary-soft hover:text-primary-dark";
+
 export default function ChatEmptyState({ onSuggestion }: { onSuggestion: (suggestion: string) => void }) {
   return (
-    <div className="chat-empty">
-      <div className="chat-empty-icon">
+    <div className="flex flex-col items-center justify-center gap-2 px-2.5 py-5 text-center text-muted">
+      <div className="mb-1 flex size-11 items-center justify-center rounded-full bg-primary-soft text-primary">
         <MessageCircle size={24} />
       </div>
-      <div className="chat-empty-title">Comment puis-je vous aider ?</div>
-      <div className="chat-empty-subtitle">Je vous guide dans l'utilisation de l'application</div>
-      <div className="chat-suggestions">
+      <div className="text-[13px] font-bold text-ink">Comment puis-je vous aider ?</div>
+      <div className="text-[10px]">Je vous guide dans l'utilisation de l'application</div>
+      <div className="mt-2 flex flex-wrap justify-center gap-1.5">
         {SUGGESTIONS.map((s) => (
-          <button key={s} className="chat-suggestion" onClick={() => onSuggestion(s)}>
+          <button key={s} className={SUGGESTION_CLASS} onClick={() => onSuggestion(s)}>
             {s}
           </button>
         ))}
