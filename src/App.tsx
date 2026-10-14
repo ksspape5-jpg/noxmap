@@ -36,6 +36,8 @@ import {
 import { CircleMarker, MapContainer, Popup, TileLayer, useMap } from "react-leaflet";
 import type { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import ChatFlottant from "./components/ChatFlottant";
+import "./components/ChatFlottant.css";
 
 type Level = "ankle" | "knee" | "waist";
 type PageTitleProps = { eyebrow?: string; title: string; description?: string };
@@ -239,6 +241,7 @@ function AppLayout() {
       </Routes>
       {!isMap && <Footer />}
       <MobileNav />
+      <ChatFlottant />
     </div>
   );
 }
