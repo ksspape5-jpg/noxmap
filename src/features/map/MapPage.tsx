@@ -7,6 +7,7 @@ import Legend from "./components/Legend";
 import ReportDetail from "./components/ReportDetail";
 import ReportsPanel from "./components/ReportsPanel";
 import SuccessToast from "./components/SuccessToast";
+import "./map.css";
 
 export default function MapPage() {
   const navigate = useNavigate();

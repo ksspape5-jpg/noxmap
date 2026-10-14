@@ -3,6 +3,7 @@ import { PageTitle } from "@/shared/ui";
 import AboutGrid from "./components/AboutGrid";
 import OpenSourceCard from "./components/OpenSourceCard";
 import WolofNote from "./components/WolofNote";
+import "./about.css";
 
 export default function AboutPage() {
   return (

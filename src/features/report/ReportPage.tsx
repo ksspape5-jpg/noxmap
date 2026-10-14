@@ -7,6 +7,7 @@ import ProgressHeader from "./components/ProgressHeader";
 import ReportAssurance from "./components/ReportAssurance";
 import ReportConfirmation from "./components/ReportConfirmation";
 import type { ReportStep } from "./types";
+import "./report.css";
 
 const SUBMIT_DELAY_MS = 800;
 

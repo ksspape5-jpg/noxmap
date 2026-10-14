@@ -1,6 +1,7 @@
 import { Waves } from "lucide-react";
 import { levelMeta } from "./levels";
 import type { Level } from "./types";
+import "./LevelBadge.css";
 
 export default function LevelBadge({ level }: { level: Level }) {
   const meta = levelMeta[level];

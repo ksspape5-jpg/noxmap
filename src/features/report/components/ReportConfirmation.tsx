@@ -1,6 +1,7 @@
 import { Check, Map as MapIcon, MapPin, Plus, ShieldCheck } from "lucide-react";
 import { LevelBadge, levelMeta, type Level } from "@/shared/flood";
 import { Button } from "@/shared/ui";
+import "./ReportConfirmation.css";
 
 type ReportConfirmationProps = {
   level: Level | null;

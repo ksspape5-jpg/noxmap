@@ -1,0 +1,144 @@
+.level-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.level-card {
+  width: 100%;
+  min-height: 98px;
+  border: 1px solid var(--color-border);
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.level-card:hover,
+.level-card.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-soft);
+}
+
+.level-card.critical {
+  border-color: #bdaeb0;
+  background: #fdfafa;
+}
+
+.water-figure {
+  height: 72px;
+  border-radius: 10px;
+  background: #edf2f0;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.water-figure > span {
+  position: absolute;
+  left: 29px;
+  top: 12px;
+  width: 15px;
+  height: 52px;
+  border-radius: 9px 9px 4px 4px;
+  background: #927967;
+}
+
+.water-figure > span::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: -8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #927967;
+}
+
+.water-line {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  height: 7px;
+  opacity: .9;
+}
+
+.water-line::before {
+  content: "";
+  position: absolute;
+  inset: -4px 0 0;
+  background: inherit;
+  clip-path: polygon(0 45%,12% 10%,25% 45%,38% 10%,52% 45%,67% 10%,82% 45%,100% 10%,100% 100%,0 100%);
+}
+
+.water-line.ankle {
+  background: var(--color-ankle);
+  bottom: 8px;
+}
+
+.water-line.knee {
+  background: var(--color-knee);
+  bottom: 27px;
+}
+
+.water-line.waist {
+  background: var(--color-waist);
+  bottom: 46px;
+}
+
+.level-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.level-copy b {
+  font-size: 14px;
+}
+
+.level-copy small {
+  font-size: 10px;
+  color: var(--color-muted);
+  margin-top: 5px;
+}
+
+.level-copy em {
+  width: fit-content;
+  margin-top: 6px;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: 8px;
+  font-weight: 800;
+  background: var(--color-waist);
+  color: white;
+  padding: 4px 6px;
+  border-radius: 999px;
+}
+
+.select-circle {
+  width: 23px;
+  height: 23px;
+  border: 1px solid #b7c2be;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: white;
+}
+
+.level-card.selected .select-circle {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 800px) {
+  .level-card {
+    min-height: 94px;
+    grid-template-columns: 65px 1fr auto;
+  }
+}

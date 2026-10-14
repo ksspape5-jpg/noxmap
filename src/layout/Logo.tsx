@@ -1,4 +1,5 @@
 import { MapPin, Waves } from "lucide-react";
+import "./Logo.css";
 
 export default function Logo() {
   return (

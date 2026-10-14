@@ -1,0 +1,20 @@
+.page-title h1 {
+  max-width: 720px;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
+.page-title > p:last-child {
+  max-width: 650px;
+  color: var(--color-muted);
+  margin-top: 12px;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+@media (max-width: 800px) {
+  .page-title h1 {
+    font-size: 32px;
+  }
+}

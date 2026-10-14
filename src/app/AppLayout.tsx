@@ -3,6 +3,7 @@ import ChatFlottant from "@/features/assistant";
 import WeatherAlert from "@/features/weather-alert";
 import { Footer, Header, MobileNav } from "@/layout";
 import AppRoutes from "./AppRoutes";
+import "@/layout/layout.css";
 
 export default function AppLayout() {
   const location = useLocation();

@@ -1,4 +1,5 @@
 import { BellRing, CloudRain, Layers3, Sparkles, Waves } from "lucide-react";
+import "./Roadmap.css";
 
 const ROADMAP_ITEMS = [
   ["Analyse IA des photos", Sparkles],

@@ -5,6 +5,7 @@ import { DemoBadge, Filters, PageTitle } from "@/shared/ui";
 import RankItem from "./components/RankItem";
 import RankingSummary from "./components/RankingSummary";
 import { rankData } from "./rankingData";
+import "./ranking.css";
 
 export default function RankingPage() {
   const [filter, setFilter] = useState("Aujourd'hui");

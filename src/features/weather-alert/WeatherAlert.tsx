@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, CloudRain, X } from "lucide-react";
 import { Button } from "@/shared/ui";
+import "./WeatherAlert.css";
 
 export default function WeatherAlert() {
   const [visible, setVisible] = useState(true);

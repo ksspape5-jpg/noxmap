@@ -1,3 +1,5 @@
+import "./Filters.css";
+
 const PERIODS = ["Dernière heure", "Aujourd'hui", "7 jours"];
 
 type FiltersProps = { active: string; onChange: (filter: string) => void };

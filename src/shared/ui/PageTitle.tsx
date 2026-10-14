@@ -1,3 +1,5 @@
+import "./PageTitle.css";
+
 type PageTitleProps = { eyebrow?: string; title: string; description?: string };
 
 export default function PageTitle({ eyebrow, title, description }: PageTitleProps) {

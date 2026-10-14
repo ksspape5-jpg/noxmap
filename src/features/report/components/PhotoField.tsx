@@ -1,5 +1,6 @@
 import { Camera, Plus, Trash2 } from "lucide-react";
 import { DEMO_PHOTO_URL } from "@/shared/flood";
+import "./PhotoField.css";
 
 type PhotoFieldProps = { hasPhoto: boolean; onChange: (hasPhoto: boolean) => void };
 

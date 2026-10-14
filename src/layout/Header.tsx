@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Menu, Plus, X } from "lucide-react";
 import Logo from "./Logo";
 import { navItems } from "./navItems";
+import "./Header.css";
 
 export default function Header() {
   const [open, setOpen] = useState(false);

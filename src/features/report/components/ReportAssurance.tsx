@@ -1,6 +1,7 @@
 import { Check, ShieldCheck } from "lucide-react";
 import { DemoBadge } from "@/shared/ui";
 import type { ReportStep } from "../types";
+import "./ReportAssurance.css";
 
 export default function ReportAssurance({ step }: { step: ReportStep }) {
   return (

@@ -3,6 +3,7 @@ import type { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { levelMeta, reports } from "@/shared/flood";
 import MapController from "./MapController";
+import "./MapCanvas.css";
 
 const DAKAR: LatLngExpression = [14.75, -17.32];
 const NEW_REPORT_POSITION: LatLngExpression = [14.778, -17.33];

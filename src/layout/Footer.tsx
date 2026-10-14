@@ -1,5 +1,6 @@
 import { Code2 } from "lucide-react";
 import Logo from "./Logo";
+import "./Footer.css";
 
 export default function Footer() {
   return (

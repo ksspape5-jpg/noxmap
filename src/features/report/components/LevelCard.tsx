@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { levelMeta, type Level } from "@/shared/flood";
+import "./LevelCard.css";
 
 type LevelCardProps = { level: Level; selected: boolean; onClick: () => void };
 
