@@ -3,13 +3,12 @@ import ChatFlottant from "@/features/assistant";
 import WeatherAlert from "@/features/weather-alert";
 import { Footer, Header, MobileNav } from "@/layout";
 import AppRoutes from "./AppRoutes";
-import "@/layout/layout.css";
 
 export default function AppLayout() {
   const location = useLocation();
   const isMap = location.pathname === "/carte";
   return (
-    <div className={`app-shell ${isMap ? "map-route" : ""}`}>
+    <div className="min-h-screen">
       <Header />
       {!isMap && <WeatherAlert />}
       <AppRoutes />

@@ -25,3 +25,10 @@ export const levelMeta: Record<Level, LevelMeta> = {
 };
 
 export const LEVELS = Object.keys(levelMeta) as Level[];
+
+// Couleur de fond Tailwind de chaque niveau (classes écrites en entier pour que Tailwind les détecte).
+export const LEVEL_BG: Record<Level, string> = {
+  ankle: "bg-ankle",
+  knee: "bg-knee",
+  waist: "bg-waist",
+};
