@@ -9,7 +9,7 @@ const DAKAR: LatLngExpression = [14.75, -17.32];
 const NEW_REPORT_POSITION: LatLngExpression = [14.778, -17.33];
 
 // Les styles de Leaflet ne sont pas dans un layer Tailwind : `!` est nécessaire pour les surcharger.
-const MAP_CLASSES = "leaflet-map z-1 size-full bg-primary-soft! [&_.leaflet-control-attribution]:text-[8px]!";
+const MAP_CLASSES = "z-1 size-full bg-primary-soft! [&_.leaflet-control-attribution]:text-[8px]!";
 
 type MapCanvasProps = {
   onSelect?: (id: number) => void;

@@ -39,7 +39,7 @@ export default function ReportDetail({ reportId, onClose }: ReportDetailProps) {
         </div>
         <div className="my-3.5 flex gap-2.25 rounded-[10px] bg-canvas p-2.75 text-muted">
           <Info size={17} />
-          <span className="flex flex-col text-[9px] leading-[1.5]">
+          <span className="flex flex-col text-[9px] leading-normal">
             <b className="text-ink">Point temporaire</b>Il expirera dans 2 h sans nouvelle confirmation.
           </span>
         </div>

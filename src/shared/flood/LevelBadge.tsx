@@ -13,7 +13,7 @@ export default function LevelBadge({ level, className }: { level: Level; classNa
   return (
     <span
       className={cn(
-        "level-badge inline-flex items-center gap-1 rounded-full px-1.75 py-1.25 text-[9px] font-extrabold whitespace-nowrap",
+        "inline-flex items-center gap-1 rounded-full px-1.75 py-1.25 text-[9px] font-extrabold whitespace-nowrap",
         BADGE_COLORS[level],
         className,
       )}

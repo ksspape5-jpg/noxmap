@@ -15,7 +15,7 @@ export default function Button({ children, variant = "primary", className, ...pr
   return (
     <button
       className={cn(
-        "btn inline-flex min-h-12.5 items-center justify-center gap-2.25 rounded-xl border border-transparent px-5 text-sm font-bold transition-all duration-200",
+        "inline-flex min-h-12.5 items-center justify-center gap-2.25 rounded-xl border border-transparent px-5 text-sm font-bold transition-all duration-200",
         "enabled:hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-55",
         VARIANTS[variant],
         className,

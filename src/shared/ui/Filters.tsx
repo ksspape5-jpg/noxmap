@@ -6,7 +6,7 @@ type FiltersProps = { active: string; onChange: (filter: string) => void; classN
 
 export default function Filters({ active, onChange, className }: FiltersProps) {
   return (
-    <div className={cn("filters flex rounded-xl bg-subtle p-1", className)} role="group" aria-label="Période">
+    <div className={cn("flex rounded-xl bg-subtle p-1", className)} role="group" aria-label="Période">
       {PERIODS.map((filter) => (
         <button
           key={filter}

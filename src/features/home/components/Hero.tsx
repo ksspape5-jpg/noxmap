@@ -27,7 +27,7 @@ export default function Hero() {
             <Plus size={19} /> Ici c'est inondé
           </Button>
         </div>
-        <p className="flex items-center gap-2 text-[11px] leading-[1.5] text-muted max-md:items-start">
+        <p className="flex items-center gap-2 text-[11px] leading-normal text-muted max-md:items-start">
           <ShieldCheck size={17} className="flex-none text-success" /> Aide à réagir, ne remplace ni les alertes officielles ni les secours.
         </p>
       </div>

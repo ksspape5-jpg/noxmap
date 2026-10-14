@@ -30,7 +30,7 @@ export default function ReportAssurance({ step }: { step: ReportStep }) {
       </ol>
       <div className="mt-auto flex w-full gap-2.25 rounded-xl border border-white/13 bg-white/6 p-3.25 text-[#a7d0c4]">
         <ShieldCheck size={18} />
-        <span className="flex flex-col text-[9px] leading-[1.5] text-border-strong">
+        <span className="flex flex-col text-[9px] leading-normal text-border-strong">
           <b className="mb-0.5 text-[10px] text-white">Vie privée visible</b>
           Aucun nom, téléphone ou adresse personnelle n'est demandé.
         </span>

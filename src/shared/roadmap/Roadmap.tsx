@@ -14,7 +14,7 @@ export default function Roadmap({ className }: { className?: string }) {
   return (
     <section
       className={cn(
-        "roadmap mx-auto mb-16 max-w-298 rounded-3xl bg-primary-soft px-6 py-16",
+        "mx-auto mb-16 max-w-298 rounded-3xl bg-primary-soft px-6 py-16",
         "max-md:mx-3 max-md:mt-2.5 max-md:mb-8.75 max-md:rounded-[20px] max-md:px-4.5 max-md:py-8.5",
         className,
       )}
