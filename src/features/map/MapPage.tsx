@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Plus } from "lucide-react";
+import { reports } from "@/shared/flood";
 import { cn } from "@/shared/lib/cn";
 import { MapCanvas } from "@/shared/map";
 import { Button, Filters } from "@/shared/ui";
@@ -14,8 +15,18 @@ import SuccessToast from "./components/SuccessToast";
 export default function MapPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  // `?focus=<quartier>` (lien depuis le classement) centre la carte sur ce quartier.
+  const focus = searchParams.get("focus");
+  const focusReport = focus ? reports.find((report) => report.place === focus) : undefined;
+  const focusCenter = useMemo<[number, number] | undefined>(
+    () => (focusReport ? [focusReport.lat, focusReport.lng] : undefined),
+    [focusReport],
+  );
   const [filter, setFilter] = useState("Aujourd'hui");
-  const [selected, setSelected] = useState<number | null>(location.state?.newReport ? 1 : null);
+  const [selected, setSelected] = useState<number | null>(
+    focusReport ? focusReport.id : location.state?.newReport ? 1 : null,
+  );
   const [legendOpen] = useState(true);
   const newReport = Boolean(location.state?.newReport);
   // Sur mobile, la fiche ouverte recouvre le bas de la carte : on masque les contrôles flottants.
@@ -24,7 +35,7 @@ export default function MapPage() {
     <main className="grid h-screen grid-cols-[380px_1fr] overflow-hidden bg-white pt-18 max-md:block max-md:h-[calc(100vh-72px)] max-md:p-0">
       <ReportsPanel filter={filter} onFilterChange={setFilter} selected={selected} onSelect={setSelected} />
       <section className="relative min-w-0 max-md:size-full">
-        <MapCanvas onSelect={setSelected} selected={selected} newReport={newReport} />
+        <MapCanvas onSelect={setSelected} selected={selected} newReport={newReport} center={focusCenter} />
         <div className="absolute inset-x-3 top-3 z-400 hidden max-md:block">
           <Filters className="bg-subtle/96 shadow-[0_3px_15px_rgba(0,0,0,.13)]" active={filter} onChange={setFilter} />
         </div>

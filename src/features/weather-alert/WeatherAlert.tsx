@@ -12,7 +12,7 @@ export default function WeatherAlert() {
     <aside
       className={cn(
         "relative flex min-h-16 items-center gap-4.5 bg-weather-soft px-page py-2.5 text-weather-ink",
-        "max-md:min-h-17.5 max-md:pr-10.5 max-md:pl-3.5",
+        "max-md:min-h-17.5 max-md:pr-10.5 max-md:pl-3.5 print:hidden",
       )}
     >
       <div className="flex flex-1 items-center gap-3 max-md:items-start">

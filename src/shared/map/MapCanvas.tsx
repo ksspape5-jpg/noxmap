@@ -16,10 +16,11 @@ type MapCanvasProps = {
   selected?: number | null;
   newReport?: boolean;
   compact?: boolean;
+  center?: [number, number];
   className?: string;
 };
 
-export default function MapCanvas({ onSelect, selected, newReport, compact = false, className }: MapCanvasProps) {
+export default function MapCanvas({ onSelect, selected, newReport, compact = false, center, className }: MapCanvasProps) {
   const visibleReports = compact ? reports.slice(0, 3) : reports;
   return (
     <MapContainer center={DAKAR} zoom={11} zoomControl={!compact} scrollWheelZoom className={cn(MAP_CLASSES, className)}>
@@ -48,7 +49,7 @@ export default function MapCanvas({ onSelect, selected, newReport, compact = fal
           <Popup><b>Nouveau point noir</b><br />Votre signalement vient d'être ajouté.</Popup>
         </CircleMarker>
       )}
-      <MapController />
+      <MapController center={center} />
     </MapContainer>
   );
 }

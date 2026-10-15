@@ -6,7 +6,7 @@ import { navItems } from "./navItems";
 export default function MobileNav() {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-1100 hidden h-18 grid-cols-5 border-t border-border bg-white/97 px-1.75 pt-1.75 pb-[max(7px,env(safe-area-inset-bottom))] backdrop-blur-md max-md:grid"
+      className="fixed inset-x-0 bottom-0 z-1100 hidden h-18 grid-cols-5 border-t border-border bg-white/97 px-1.75 pt-1.75 pb-[max(7px,env(safe-area-inset-bottom))] backdrop-blur-md max-md:grid print:hidden"
       aria-label="Navigation principale"
     >
       {navItems.map(({ to, label, icon: Icon, featured }) => (

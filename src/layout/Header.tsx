@@ -21,7 +21,7 @@ export default function Header() {
     <header
       className={cn(
         "sticky top-0 z-1000 flex h-18 items-center justify-between border-b border-border bg-white/96 px-page backdrop-blur-md",
-        "max-md:h-15.5 max-md:px-4",
+        "max-md:h-15.5 max-md:px-4 print:hidden",
         // Sur la carte, l'en-tête passe par-dessus la carte (et disparaît sur mobile).
         isMap && "fixed inset-x-0 max-md:hidden",
       )}

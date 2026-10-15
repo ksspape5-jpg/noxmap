@@ -1,16 +1,20 @@
 # Contribuer à Points Noirs Dakar
 
+Merci de votre intérêt ! Ce projet vise à rendre l'information sur les inondations plus lisible à Dakar.
+En participant, vous vous engagez à garder un comportement respectueux et inclusif envers les autres.
+
 Ce guide explique comment le code est organisé et comment travailler à plusieurs sans se marcher dessus.
 
 ## Lancer le projet
 
 ```bash
-pnpm install            # dépendances du front
-cd server && npm install # dépendances de l'API
-pnpm dev:all            # front (Vite) + API (Express) en parallèle
+pnpm install             # dépendances du front
+cd server && npm install  # dépendances de l'API
+cp .env.example .env      # puis renseignez GEMINI_API_KEY
+pnpm dev:all             # front (Vite) + API (Express) en parallèle
 ```
 
-L'API a besoin d'un fichier `server/.env` contenant `GEMINI_API_KEY=...` (jamais commité).
+Le fichier `.env` (jamais commité) est lu par le front et par l'API ; un `server/.env` éventuel a la priorité côté API.
 
 ## Architecture du front (`src/`)
 
@@ -30,7 +34,7 @@ src/
 │   ├── ranking/          Classement des quartiers
 │   ├── about/            Page « À propos »
 │   ├── weather-alert/    Bandeau de vigilance pluie
-│   └── assistant/        Chat flottant (hook, appel API, prompt)
+│   └── assistant/        Chat flottant (hooks, appel API en streaming, prompt, base de connaissances)
 └── shared/               Code utilisé par plusieurs fonctionnalités
     ├── ui/               Button, IconButton, Eyebrow, SectionHeading, PageTitle,
     │                     DemoBadge, Filters, ContentPage
@@ -47,7 +51,8 @@ features/<nom>/
 ├── index.ts              API publique (export par défaut de la page)
 ├── <Nom>Page.tsx         Composant de page : état + assemblage
 ├── components/           Composants internes
-├── hooks/  api/  types.ts  data.ts   (selon les besoins)
+├── hooks/  api/  lib/  types.ts  data.ts   (selon les besoins)
+└── *.test.ts(x)          Tests Vitest, à côté du fichier testé
 ```
 
 ## Règles pour limiter le couplage
@@ -84,9 +89,10 @@ server/
 ├── index.js              Démarre le serveur
 └── src/
     ├── app.js            Application Express (middlewares + routes)
-    ├── config.js         Variables d'environnement
-    ├── routes/chat.js    POST /api/chat
-    └── services/gemini.js Appel à l'API Gemini
+    ├── config.js         Variables d'environnement (clé, CORS, limitation de débit)
+    ├── middleware/       rateLimit.js : limitation de débit par IP
+    ├── routes/chat.js    POST /api/chat et POST /api/chat/stream (SSE)
+    └── services/gemini.js Appels à l'API Gemini (réponse complète ou en flux)
 ```
 
 Une nouvelle route = un fichier dans `routes/` branché dans `app.js` ; la logique métier va dans `services/`.
@@ -99,4 +105,47 @@ Une nouvelle route = un fichier dans `routes/` branché dans `app.js` ; la logiq
   - `fix: corriger la largeur des barres du classement`
   - `refactor: extraire le panneau de signalements`
   - `docs:`, `style:`, `chore:` pour le reste
-- Avant d'ouvrir une PR : `pnpm build` doit passer et `git pull --rebase origin main` pour rester à jour.
+- Avant d'ouvrir une PR, lancez les vérifications de la CI et faites `git pull --rebase origin main` pour rester à jour :
+
+```bash
+pnpm typecheck   # TypeScript
+pnpm test        # Vitest
+pnpm build       # build de production
+```
+
+- Gardez des PR **petites et ciblées** (une fonctionnalité ou un correctif par PR).
+- Ajoutez des **tests** pour toute logique nouvelle (par ex. `src/features/ranking/rankingData.test.ts`).
+- Vérifiez l'accessibilité (libellés ARIA, navigation clavier, contrastes).
+
+## Bonnes premières contributions
+
+Ces tâches sont bien délimitées et idéales pour débuter :
+
+- [ ] **Valider les traductions wolof** de l'assistant (`src/features/assistant/config/assistantStrings.ts`).
+- [ ] **Enrichir la base de connaissances** de l'assistant (`src/features/assistant/config/knowledge.ts`).
+- [ ] **Ajouter des tests** pour `ChatFlottant` (envoi, streaming, retour).
+- [ ] **Améliorer l'accessibilité** : lien d'évitement, focus visible, rôles ARIA.
+- [ ] **Documenter** une fonctionnalité dans le README.
+- [ ] **Ajouter un indicateur** au classement (par ex. par confirmations).
+
+## Signaler un bug
+
+Ouvrez une issue en décrivant : la page concernée, ce que vous attendiez, ce qui s'est produit,
+et si possible une capture d'écran. L'assistant propose aussi un bouton « Signaler une erreur »
+sur chaque réponse.
+
+## Idées plus larges
+
+Le premier prototype IA se concentre sur trois choses : **lecture des photos**,
+**floutage des visages et plaques** et **détection des doublons**. Le reste suit :
+
+- Comprendre les messages vocaux (français et wolof).
+- Trouver le lieu à partir d'un texte ou d'un vocal.
+- Répondre sur WhatsApp à partir des données de la carte.
+- Rédiger des rapports automatiques pour la mairie.
+- Modérer les contenus (photos inappropriées, spam, abus).
+- Prédire les quartiers à risque (altitude, pluie prévue, historique).
+- Passer des données de démonstration à de vraies données (PostGIS).
+
+Principes à respecter : l'IA ne décide jamais seule d'une urgence, n'invente pas
+d'information (réponse « donnée insuffisante » sinon) et indique un niveau de confiance.

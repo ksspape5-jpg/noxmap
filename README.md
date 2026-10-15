@@ -53,15 +53,17 @@ Toute l'application s'appuie sur trois niveaux, faciles à estimer à l'œil nu 
 | Page | Route | Ce qu'on y fait |
 | --- | --- | --- |
 | **Accueil** | `/` | Présentation, chiffres du jour, les 3 gestes, feuille de route |
-| **Carte** | `/carte` | Carte des signalements actifs, liste latérale, fiche détaillée de chaque point, légende |
+| **Carte** | `/carte` | Carte des signalements actifs, liste latérale, fiche détaillée de chaque point, légende, recentrage sur un quartier via `?focus=` |
 | **Signaler** | `/signaler` | Formulaire en 2 étapes : placer le point, puis choisir le niveau d'eau (photo facultative) |
-| **Classement** | `/classement` | Quartiers les plus touchés, zones récurrentes |
-| **À propos** | `/a-propos` | Le projet, la vie privée, les limites de l'outil |
+| **Classement** | `/classement` | Quartiers les plus touchés, filtres par période et par indicateur (volume, gravité, niveau), fiche détail par quartier, comparaison avec la saison précédente, export **CSV / GeoJSON / PDF** |
+| **À propos** | `/a-propos` | Le projet, la vie privée, les limites de l'outil et de l'IA |
 
 Sur toutes les pages :
 
 - un **bandeau de vigilance pluie** ;
-- un **assistant intégré** (bouton ✨ en bas à droite) qui répond aux questions sur l'utilisation de l'application, propulsé par l'API Gemini.
+- un **assistant intégré** (bouton ✨ en bas à droite) qui répond aux questions sur l'utilisation de l'application, propulsé par l'API Gemini : réponses en streaming, contexte de la page, base de connaissances, suggestions par page, historique, retour 👍/👎, dictée et lecture vocale, interface français / wolof.
+
+L'application est aussi une **PWA** installable : la coquille est mise en cache pour un usage hors ligne partiel.
 
 L'interface est pensée **mobile d'abord** : barre de navigation en bas de l'écran, fiche de détail qui glisse depuis le bas sur la carte.
 
@@ -107,7 +109,7 @@ pnpm install
 cd server && npm install && cd ..
 
 # 4. Configurer la clé de l'assistant
-echo "GEMINI_API_KEY=votre_cle_ici" > server/.env
+cp .env.example .env   # puis renseignez GEMINI_API_KEY
 
 # 5. Lancer le front et l'API ensemble
 pnpm dev:all
@@ -121,21 +123,25 @@ Ouvrez ensuite **<http://localhost:5173>**. 🎉
 
 ## Configuration
 
-Les fichiers `.env` ne sont jamais commités (ils sont dans `.gitignore`).
+Toute la configuration tient dans un fichier `.env` à la racine, à créer à partir de `.env.example`. Les fichiers `.env` ne sont jamais commités (ils sont dans `.gitignore`). Un `server/.env` éventuel a la priorité côté API.
 
-**API — `server/.env`**
+**API**
 
 | Variable | Obligatoire | Défaut | Rôle |
 | --- | --- | --- | --- |
 | `GEMINI_API_KEY` | oui (pour l'assistant) | — | Clé de l'API Gemini |
 | `GEMINI_MODEL` | non | `gemini-3.1-flash-lite` | Modèle Gemini utilisé |
 | `PORT` | non | `3001` | Port de l'API |
+| `ALLOWED_ORIGINS` | non | origines locales | Origines CORS autorisées, séparées par des virgules |
+| `RATE_LIMIT_MAX` | non | `20` | Requêtes max par IP et par fenêtre |
+| `RATE_LIMIT_WINDOW_MS` | non | `60000` | Durée de la fenêtre de limitation (ms) |
 
-**Front — `.env` à la racine (facultatif)**
+**Front**
 
 | Variable | Défaut | Rôle |
 | --- | --- | --- |
 | `VITE_API_BASE_URL` | `http://localhost:3001` | Adresse de l'API appelée par l'assistant |
+| `VITE_REPO_URL` | `https://github.com/ksspape5-jpg/noxmap` | Dépôt utilisé par le bouton « Signaler une erreur » de l'assistant |
 
 ---
 
@@ -150,6 +156,8 @@ Les fichiers `.env` ne sont jamais commités (ils sont dans `.gitignore`).
 | `pnpm dev:all` | Lance les deux en parallèle |
 | `pnpm build` | Construit la version de production dans `dist/` |
 | `pnpm preview` | Sert localement la version construite |
+| `pnpm typecheck` | Vérifie les types TypeScript |
+| `pnpm test` | Lance les tests (Vitest) |
 | `pnpm format` | Formate le code avec oxfmt |
 
 ---
@@ -159,14 +167,14 @@ Les fichiers `.env` ne sont jamais commités (ils sont dans `.gitignore`).
 ### Vue d'ensemble
 
 ```text
-┌───────────────────────────┐   POST /api/chat   ┌────────────────────┐        ┌────────────┐
+┌───────────────────────────┐ /api/chat(/stream) ┌────────────────────┐        ┌────────────┐
 │  Front (React + Vite)     │ ─────────────────▶ │  API (Express)     │ ─────▶ │ API Gemini │
 │  http://localhost:5173    │ ◀───────────────── │  localhost:3001    │ ◀───── │  (Google)  │
 └───────────────────────────┘      réponse       └────────────────────┘        └────────────┘
    Carte : tuiles OpenStreetMap
 ```
 
-Le front fonctionne seul. L'API ne sert qu'à l'assistant, pour que la clé Gemini ne soit **jamais exposée dans le navigateur**.
+Le front fonctionne seul. L'API ne sert qu'à l'assistant, pour que la clé Gemini ne soit **jamais exposée dans le navigateur**. Elle n'accepte que les origines autorisées (CORS) et limite le nombre de requêtes par IP.
 
 ### Stack technique
 
@@ -177,6 +185,7 @@ Le front fonctionne seul. L'API ne sert qu'à l'assistant, pour que la clé Gemi
 | Carte | Leaflet + react-leaflet, tuiles OpenStreetMap |
 | Icônes | lucide-react |
 | API | Node.js, Express, Gemini |
+| Tests | Vitest, Testing Library |
 
 ### Organisation du code
 
@@ -198,7 +207,9 @@ src/
 
 server/
 ├── index.js        Démarrage
-└── src/            Config, routes, service Gemini
+└── src/            Config, middleware, routes, service Gemini
+
+public/             Assets PWA (manifest, service worker, icônes)
 ```
 
 **Où trouver quoi ?**
@@ -209,7 +220,7 @@ server/
 | Ajouter une route ou un lien de menu | `src/app/AppRoutes.tsx` et `src/layout/navItems.ts` |
 | Changer les couleurs | bloc `@theme` de `src/index.css` |
 | Modifier les données de démo | `src/shared/flood/mockReports.ts`, `src/features/ranking/rankingData.ts` |
-| Modifier le comportement de l'assistant | `src/features/assistant/config/assistantPrompt.ts` |
+| Modifier le comportement de l'assistant | `src/features/assistant/config/` (prompt, base de connaissances, textes FR/wolof) |
 | Modifier l'appel à Gemini | `server/src/services/gemini.js` |
 
 Le détail des règles d'organisation est dans [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -240,7 +251,7 @@ Toutes les contributions sont les bienvenues : code, design, traduction en wolof
 1. Lisez [CONTRIBUTING.md](CONTRIBUTING.md) (architecture, conventions de style, workflow Git).
 2. Créez une branche depuis `main` : `feat/…` ou `fix/…`.
 3. Faites des commits au format [Conventional Commits](https://www.conventionalcommits.org/fr/), par exemple `feat: ajouter le filtre par période sur la carte`.
-4. Vérifiez que `pnpm build` passe, puis ouvrez une Pull Request.
+4. Vérifiez que `pnpm typecheck`, `pnpm test` et `pnpm build` passent, puis ouvrez une Pull Request.
 
 **Idées pour commencer** : brancher les filtres par période, utiliser la vraie géolocalisation pour « Ma position », enregistrer les signalements dans une base de données.
 
@@ -248,12 +259,27 @@ Toutes les contributions sont les bienvenues : code, design, traduction en wolof
 
 ## Feuille de route
 
-- [ ] Enregistrement réel des signalements (API + base de données)
-- [ ] Analyse IA des photos (confirmation du niveau d'eau)
-- [ ] Bot WhatsApp pour signaler sans ouvrir l'application
+**Produit**
+
+- [ ] Enregistrement réel des signalements (API + base de données PostGIS)
+- [ ] Version wolof validée par un locuteur natif
 - [ ] Alertes météo réelles
-- [ ] Version wolof avec messages audio
-- [ ] Carte des zones à risque (altitude, historique, pluie prévue)
+
+**IA** — le premier prototype se concentre sur la lecture des photos, le floutage des visages et plaques et la détection des doublons.
+
+| Fonction | Priorité |
+| --- | --- |
+| Lire les photos : eau oui/non, hauteur estimée, indice de confiance | MVP |
+| Flouter les visages et les plaques d'immatriculation | MVP |
+| Écarter les faux signalements, regrouper les signalements proches | MVP (amélioré en V2) |
+| Comprendre les messages vocaux en français et en wolof | V2 |
+| Trouver le lieu à partir d'un texte ou d'un vocal | V2 |
+| Répondre aux questions sur WhatsApp depuis les données de la carte | V2 |
+| Modérer les contenus (photos inappropriées, spam, abus) | V2 |
+| Rédiger des rapports automatiques pour la mairie | V3 |
+| Prédire les quartiers à risque (altitude, pluie prévue, historique) | V3 |
+
+**Ce que l'IA ne fait pas** : elle ne décide jamais seule d'une urgence, elle n'invente pas d'information (elle répond « donnée insuffisante » quand elle ne sait pas) et elle indique toujours un niveau de confiance.
 
 ---
 

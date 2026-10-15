@@ -1,28 +1,54 @@
-import { useState } from "react";
-import { sendChatMessages } from "../api/chatApi";
+import { useEffect, useState } from "react";
+import { requestReply, streamReply } from "../api/chatApi";
+import { loadHistory, logQuestion, saveHistory } from "../lib/storage";
 import type { ChatMessage } from "../types";
 
-export function useChat() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+// `buildPrompt` reçoit la question et renvoie le prompt système à envoyer avec l'historique.
+export function useChat(buildPrompt: (query: string) => string) {
+  const [messages, setMessages] = useState<ChatMessage[]>(loadHistory);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const sendMessage = async (content: string) => {
-    if (!content.trim()) return;
-    setError(null);
-    const newMessages: ChatMessage[] = [...messages, { role: "user", content: content.trim() }];
-    setMessages(newMessages);
-    setLoading(true);
+  useEffect(() => saveHistory(messages), [messages]);
 
+  const sendMessage = async (content: string) => {
+    if (!content.trim() || loading) return;
+    setError(null);
+    const question = content.trim();
+    const history: ChatMessage[] = [...messages, { role: "user", content: question }];
+    setMessages(history);
+    setLoading(true);
+    logQuestion(question);
+
+    const systemPrompt = buildPrompt(question);
     try {
-      const text = await sendChatMessages(newMessages);
-      setMessages([...newMessages, { role: "assistant", content: text }]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur réseau");
+      await streamReply(systemPrompt, history, (text) =>
+        setMessages([...history, { role: "assistant", content: text }]),
+      );
+    } catch {
+      // Flux indisponible : on retente sans streaming.
+      try {
+        const text = await requestReply(systemPrompt, history);
+        setMessages([...history, { role: "assistant", content: text }]);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Erreur réseau");
+        setMessages(history);
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  return { messages, loading, error, sendMessage };
+  const setFeedback = (index: number, value: "up" | "down") => {
+    setMessages((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, feedback: item.feedback === value ? undefined : value } : item)),
+    );
+  };
+
+  const reset = () => {
+    setMessages([]);
+    setError(null);
+  };
+
+  return { messages, loading, error, setError, sendMessage, setFeedback, reset };
 }
