@@ -1,10 +1,10 @@
-import { Info } from "lucide-react";
+import { AlertTriangle, Info } from "lucide-react";
 
 export default function FormError({ message }: { message: string }) {
   if (!message) return null;
   return (
-    <p className="mt-3 flex items-center gap-1.75 rounded-[9px] bg-danger-soft px-3 py-2.5 text-[10px] text-danger">
-      <Info size={16} />
+    <p className="mt-4 flex items-center gap-2 rounded-xl bg-danger-soft px-4 py-3 text-[11.5px] font-medium text-danger animate-[shake_0.3s_ease-out]">
+      <AlertTriangle size={17} className="flex-none" />
       {message}
     </p>
   );

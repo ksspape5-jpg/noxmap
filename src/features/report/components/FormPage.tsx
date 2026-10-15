@@ -6,11 +6,17 @@ export default function FormPage({ children, className }: { children: ReactNode;
   return (
     <main
       className={cn(
-        "flex min-h-[calc(100vh-72px)] items-start justify-center bg-subtle px-5 pt-12.5 pb-22.5",
-        "max-md:min-h-[calc(100vh-62px)] max-md:bg-white max-md:px-3 max-md:pt-5 max-md:pb-7.5",
+        "relative flex min-h-[calc(100vh-72px)] items-start justify-center px-6 pt-14 pb-24",
+        "bg-gradient-to-b from-canvas via-canvas to-subtle",
+        "max-md:min-h-[calc(100vh-62px)] max-md:bg-white max-md:px-4 max-md:pt-6 max-md:pb-8",
         className,
       )}
     >
+      {/* Decorative background circles */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden max-md:hidden">
+        <div className="absolute -top-[200px] -right-[100px] size-[500px] rounded-full bg-primary/[.03]" />
+        <div className="absolute -bottom-[150px] -left-[80px] size-[400px] rounded-full bg-accent/[.04]" />
+      </div>
       {children}
     </main>
   );

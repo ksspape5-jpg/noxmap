@@ -1,8 +1,22 @@
-import { PageTitle } from "@/shared/ui";
+import { MapPin } from "lucide-react";
 
-// Titre d'une étape du formulaire : plus compact que le PageTitle par défaut.
-const STEP_TITLE_CLASSES = "mb-5.5 [&_h1]:text-[30px] max-md:[&_h1]:text-[28px] max-md:[&>p:last-child]:text-xs";
+// Titre d'une étape du formulaire avec icône contextuelle.
+type StepTitleProps = {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+};
 
-export default function StepTitle({ title, description }: { title: string; description: string }) {
-  return <PageTitle eyebrow="Nouveau signalement" title={title} description={description} className={STEP_TITLE_CLASSES} />;
+export default function StepTitle({ title, description, icon }: StepTitleProps) {
+  return (
+    <div className="mb-7 max-md:mb-5">
+      {icon && (
+        <span className="mb-3 inline-grid size-11 place-items-center rounded-2xl bg-primary-soft text-primary">
+          {icon}
+        </span>
+      )}
+      <h1 className="text-[28px] leading-[1.15] tracking-tight max-md:text-[24px]">{title}</h1>
+      <p className="mt-2 max-w-sm text-[13px] leading-relaxed text-muted">{description}</p>
+    </div>
+  );
 }

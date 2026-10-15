@@ -14,9 +14,9 @@ const SUBMIT_DELAY_MS = 800;
 
 // Carte blanche à deux colonnes (formulaire + panneau latéral) ; une seule colonne sur mobile.
 const SHELL_CLASSES = cn(
-  "grid w-full max-w-245 grid-cols-[minmax(0,1fr)_330px] overflow-hidden rounded-[20px] border border-border bg-white",
-  "shadow-[0_15px_40px_rgba(33,51,46,.07)]",
-  "max-md:block max-md:overflow-visible max-md:border-0 max-md:shadow-none",
+  "relative z-1 grid w-full max-w-[960px] grid-cols-[minmax(0,1fr)_340px] overflow-hidden rounded-3xl border border-border/60 bg-white",
+  "shadow-[0_20px_60px_rgba(33,51,46,.07),0_1px_3px_rgba(33,51,46,.04)]",
+  "max-md:block max-md:max-w-full max-md:overflow-visible max-md:rounded-none max-md:border-0 max-md:shadow-none",
 );
 
 export default function ReportPage() {
@@ -69,7 +69,7 @@ export default function ReportPage() {
   return (
     <FormPage>
       <section className={SHELL_CLASSES}>
-        <div className="p-8 max-md:px-1 max-md:py-2">
+        <div className="p-9 max-md:px-4 max-md:py-3">
           <ProgressHeader step={step} onBack={() => (step === 2 ? setStep(1) : navigate(-1))} />
           {step === 1 ? (
             <LocationStep locationSet={locationSet} error={error} onLocate={chooseLocation} onContinue={next} />
