@@ -1,7 +1,8 @@
-import { Check, CircleCheckBig, Map as MapIcon, MapPin, Plus, ShieldCheck, Sparkles } from "lucide-react";
+import { CircleCheckBig, Image as ImageIcon, Map as MapIcon, MapPin, Plus, ShieldCheck, Sparkles } from "lucide-react";
 import { LevelBadge, levelMeta, type Level } from "@/shared/flood";
 import { cn } from "@/shared/lib/cn";
 import { Button, Eyebrow } from "@/shared/ui";
+import type { ReportLocation, ReportPhoto } from "../types";
 import FormPage from "./FormPage";
 
 const CARD_CLASSES = cn(
@@ -13,11 +14,19 @@ const CARD_CLASSES = cn(
 
 type ReportConfirmationProps = {
   level: Level | null;
+  location: ReportLocation | null;
+  photos: ReportPhoto[];
   onViewMap: () => void;
   onRestart: () => void;
 };
 
-export default function ReportConfirmation({ level, onViewMap, onRestart }: ReportConfirmationProps) {
+export default function ReportConfirmation({
+  level,
+  location,
+  photos,
+  onViewMap,
+  onRestart,
+}: ReportConfirmationProps) {
   return (
     <FormPage className="items-center max-md:items-start">
       <section className={CARD_CLASSES}>
@@ -47,13 +56,33 @@ export default function ReportConfirmation({ level, onViewMap, onRestart }: Repo
             <MapPin size={22} />
           </span>
           <div className="flex flex-col">
-            <b className="text-[12px]">Keur Massar — Unité 14</b>
+            <b className="text-[12px]">{location ? location.placeName : "Position enregistrée"}</b>
             <small className="mt-0.75 text-[10px] text-muted">
-              À l'instant · {level && levelMeta[level].label}
+              {location?.isRealGps ? "Coordonnées GPS réelles" : "Position sur carte"} · {level && levelMeta[level].label}
             </small>
           </div>
           {level && <LevelBadge level={level} className="max-md:col-start-2" />}
         </div>
+
+        {/* Photos summary */}
+        {photos.length > 0 && (
+          <div className="mt-3 flex w-full items-center justify-between rounded-xl border border-border bg-canvas/40 px-3.5 py-2.5 text-left">
+            <div className="flex items-center gap-2 text-[11px] font-semibold text-ink">
+              <ImageIcon size={15} className="text-primary" />
+              <span>{photos.length} photo{photos.length > 1 ? "s" : ""} ajoutée{photos.length > 1 ? "s" : ""}</span>
+            </div>
+            <div className="flex -space-x-2">
+              {photos.map((photo, i) => (
+                <img
+                  key={photo.id}
+                  src={photo.url}
+                  alt={`Photo ${i + 1}`}
+                  className="size-7 rounded-lg border-2 border-white object-cover shadow-xs"
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Privacy note */}
         <div className="mt-4 mb-6 flex w-full items-center justify-center gap-2 text-[11px] text-success">

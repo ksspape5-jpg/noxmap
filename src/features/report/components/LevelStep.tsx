@@ -6,14 +6,16 @@ import LevelCard from "./LevelCard";
 import PhotoField from "./PhotoField";
 import StepTitle from "./StepTitle";
 
+import type { ReportPhoto } from "../types";
+
 const SPINNER_CLASSES =
   "size-5 animate-[spin_0.7s_linear_infinite] rounded-full border-[2.5px] border-white/30 border-t-white";
 
 type LevelStepProps = {
   level: Level | null;
   onLevelChange: (level: Level) => void;
-  photo: boolean;
-  onPhotoChange: (photo: boolean) => void;
+  photos: ReportPhoto[];
+  onPhotosChange: (photos: ReportPhoto[]) => void;
   consent: boolean;
   onConsentChange: (consent: boolean) => void;
   error: string;
@@ -24,14 +26,15 @@ type LevelStepProps = {
 export default function LevelStep({
   level,
   onLevelChange,
-  photo,
-  onPhotoChange,
+  photos,
+  onPhotosChange,
   consent,
   onConsentChange,
   error,
   sending,
   onSubmit,
 }: LevelStepProps) {
+
   return (
     <>
       <StepTitle
@@ -48,7 +51,7 @@ export default function LevelStep({
       </div>
 
       {/* Photo section */}
-      <PhotoField hasPhoto={photo} onChange={onPhotoChange} />
+      <PhotoField photos={photos} onChange={onPhotosChange} />
 
       {/* Consent checkbox */}
       <label
