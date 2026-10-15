@@ -26,13 +26,16 @@ importers:
       react-router-dom:
         specifier: ^7.18.4
         version: 7.18.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      tailwind-merge:
+        specifier: ^3.7.0
+        version: 3.7.0
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.0.0
         version: 4.2.2(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1))
       '@testing-library/jest-dom':
         specifier: ^7.0.1
-        version: 7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.4(@types/node@22.19.17)(jsdom@25.0.1(supports-color@10.2.2))(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1)))
+        version: 7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.4(@types/node@22.19.17)(jsdom@25.0.1)(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1)))
       '@testing-library/react':
         specifier: ^16.3.3
         version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -59,7 +62,7 @@ importers:
         version: 10.0.6
       jsdom:
         specifier: ^25.0.1
-        version: 25.0.1(supports-color@10.2.2)
+        version: 25.0.1
       oxfmt:
         specifier: ^0.2.0
         version: 0.2.0
@@ -74,7 +77,7 @@ importers:
         version: 8.0.5(@types/node@22.19.17)(jiti@2.6.1)
       vitest:
         specifier: ^5.0.4
-        version: 5.0.4(@types/node@22.19.17)(jsdom@25.0.1(supports-color@10.2.2))(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1))
+        version: 5.0.4(@types/node@22.19.17)(jsdom@25.0.1)(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1))
 
 packages:
 
@@ -1003,6 +1006,9 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
+  tailwind-merge@3.7.0:
+    resolution: {integrity: sha512-XPPUyAc+cvspz3lHTcR/QgPfW2A0lv/xQNIjX3HGhLR+Nq2lHaLq5MtTesHn8GUr3W3DguT2KT5x3NVgRtYwmA==}
+
   tailwindcss@4.2.2:
     resolution: {integrity: sha512-KWBIxs1Xb6NoLdMVqhbhgwZf2PGBpPEiwOqgI4pFIYbNTfBXiKYyWoTsXgBQ9WFg/OlhnvHaY+AEpW7wSmFo2Q==}
 
@@ -1449,7 +1455,7 @@ snapshots:
       picocolors: 1.1.1
       pretty-format: 27.5.1
 
-  '@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.4(@types/node@22.19.17)(jsdom@25.0.1(supports-color@10.2.2))(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1)))':
+  '@testing-library/jest-dom@7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.4(@types/node@22.19.17)(jsdom@25.0.1)(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1)))':
     dependencies:
       '@adobe/css-tools': 4.5.0
       '@testing-library/dom': 10.4.2
@@ -1459,7 +1465,7 @@ snapshots:
       picocolors: 1.1.1
       redent: 3.0.0
     optionalDependencies:
-      vitest: 5.0.4(@types/node@22.19.17)(jsdom@25.0.1(supports-color@10.2.2))(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1))
+      vitest: 5.0.4(@types/node@22.19.17)(jsdom@25.0.1)(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1))
 
   '@testing-library/react@16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
@@ -1589,11 +1595,9 @@ snapshots:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
 
-  debug@4.4.3(supports-color@10.2.2):
+  debug@4.4.3:
     dependencies:
       ms: 2.1.3
-    optionalDependencies:
-      supports-color: 10.2.2
 
   decimal.js@10.6.0: {}
 
@@ -1651,6 +1655,10 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.4
 
+  fdir@6.5.0(picomatch@4.0.7):
+    optionalDependencies:
+      picomatch: 4.0.7
+
   form-data@4.0.6:
     dependencies:
       asynckit: 0.4.0
@@ -1704,17 +1712,17 @@ snapshots:
     dependencies:
       whatwg-encoding: 3.1.1
 
-  http-proxy-agent@7.0.2(supports-color@10.2.2):
+  http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
-  https-proxy-agent@7.0.6(supports-color@10.2.2):
+  https-proxy-agent@7.0.6:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -1730,15 +1738,15 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  jsdom@25.0.1(supports-color@10.2.2):
+  jsdom@25.0.1:
     dependencies:
       cssstyle: 4.6.0
       data-urls: 5.0.0
       decimal.js: 10.6.0
       form-data: 4.0.6
       html-encoding-sniffer: 4.0.0
-      http-proxy-agent: 7.0.2(supports-color@10.2.2)
-      https-proxy-agent: 7.0.6(supports-color@10.2.2)
+      http-proxy-agent: 7.0.2
+      https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
       nwsapi: 2.2.28
       parse5: 7.3.0
@@ -1978,6 +1986,8 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
+  tailwind-merge@3.7.0: {}
+
   tailwindcss@4.2.2: {}
 
   tapable@2.3.2: {}
@@ -1993,8 +2003,8 @@ snapshots:
 
   tinyglobby@0.2.17:
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
+      fdir: 6.5.0(picomatch@4.0.7)
+      picomatch: 4.0.7
 
   tldts-core@6.1.86: {}
 
@@ -2030,7 +2040,7 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
 
-  vitest@5.0.4(@types/node@22.19.17)(jsdom@25.0.1(supports-color@10.2.2))(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1)):
+  vitest@5.0.4(@types/node@22.19.17)(jsdom@25.0.1)(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1)):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/mocker': 5.0.4(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1))
@@ -2048,7 +2058,7 @@ snapshots:
       why-is-node-running: 3.2.1
     optionalDependencies:
       '@types/node': 22.19.17
-      jsdom: 25.0.1(supports-color@10.2.2)
+      jsdom: 25.0.1
     transitivePeerDependencies:
       - msw
 
