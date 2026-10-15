@@ -7,7 +7,7 @@ export default function OpenSourceCard() {
       <div>
         <h2 className="text-lg">Ouvert par principe</h2>
         <p className="mt-1.25 text-[11px] leading-[1.6] text-night-muted">
-          Le code a vocation à être publié sous licence MIT. Une équipe de 4 contribue à cette démo avec le soutien de Galsen DEV et MLH.
+          Le code est publié sous licence MIT. Une équipe de 4 contribue à cette démo avec le soutien de Galsen DEV et MLH.
         </p>
       </div>
       <a

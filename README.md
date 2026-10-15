@@ -259,4 +259,4 @@ Toutes les contributions sont les bienvenues : code, design, traduction en wolof
 
 ## Licence
 
-Le code a vocation à être publié sous **licence MIT**. Le fichier `LICENSE` reste à ajouter au dépôt.
+Le code est publié sous **licence MIT** : vous pouvez l'utiliser, le modifier et le redistribuer librement, à condition de conserver la mention de copyright. Voir le fichier [LICENSE](LICENSE).
