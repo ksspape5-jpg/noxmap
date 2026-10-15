@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   BrowserRouter,
   NavLink,
@@ -6,6 +6,7 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  useSearchParams,
 } from "react-router-dom";
 import {
   ArrowRight,
@@ -17,6 +18,9 @@ import {
   CircleDot,
   CloudRain,
   Code2,
+  Download,
+  FileJson,
+  FileText,
   Home,
   Info,
   Layers3,
@@ -38,6 +42,15 @@ import type { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import ChatFlottant from "./components/ChatFlottant";
 import "./components/ChatFlottant.css";
+import {
+  buildRankingCsv,
+  buildRankingGeoJson,
+  periodFromFilter,
+  rankMetricLabel,
+  rankRows,
+  seasonDelta,
+  type RankMetric,
+} from "./lib/ranking";
 
 type Level = "ankle" | "knee" | "waist";
 type PageTitleProps = { eyebrow?: string; title: string; description?: string };
@@ -82,13 +95,46 @@ const reports = [
   { id: 6, place: "Diamaguène", detail: "Route des Niayes", time: "il y a 3 h", level: "ankle" as Level, lat: 14.766, lng: -17.346, confirms: 2, photo: false },
 ];
 
-const rankData = [
-  { name: "Keur Massar", count: 24, trend: "+8 aujourd'hui", black: true, recurring: true },
-  { name: "Pikine", count: 18, trend: "+4 aujourd'hui", black: true, recurring: true },
-  { name: "Thiaroye", count: 13, trend: "+2 aujourd'hui", black: false, recurring: true },
-  { name: "Guédiawaye", count: 9, trend: "stable", black: false, recurring: false },
-  { name: "Rufisque", count: 6, trend: "+1 aujourd'hui", black: false, recurring: false },
+const metricOptions: { key: RankMetric; label: string }[] = [
+  { key: "volume", label: "Volume" },
+  { key: "severity", label: "Gravité" },
+  { key: "waist", label: "Taille" },
+  { key: "knee", label: "Genou" },
+  { key: "ankle", label: "Cheville" },
 ];
+
+function downloadFile(filename: string, content: string, type: string) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function Sparkline({ data, color = "currentColor" }: { data: number[]; color?: string }) {
+  const width = 140;
+  const height = 40;
+  const pad = 3;
+  const max = Math.max(...data, 1);
+  const min = Math.min(...data, 0);
+  const span = max - min || 1;
+  const points = data
+    .map((value, index) => {
+      const x = pad + (index / Math.max(data.length - 1, 1)) * (width - pad * 2);
+      const y = height - pad - ((value - min) / span) * (height - pad * 2);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(" ");
+  return (
+    <svg className="sparkline" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true">
+      <polyline points={points} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 function Logo() {
   return (
@@ -219,7 +265,7 @@ function Footer() {
     <footer>
       <div><Logo /><b>Un outil citoyen, construit au grand jour.</b></div>
       <p>Projet open source pour mieux comprendre et partager les risques d'inondation.</p>
-      <a href="https://github.com" target="_blank" rel="noreferrer"><Code2 size={16} /> Voir sur GitHub</a>
+      <a href="https://github.com/ksspape5-jpg/noxmap" target="_blank" rel="noreferrer"><Code2 size={16} /> Voir sur GitHub</a>
       <span>Hacktoberfest 2026 Dakar — Galsen DEV</span>
     </footer>
   );
@@ -265,21 +311,28 @@ function MiniMapVisual() {
 
 function Roadmap() {
   const items = [
-    ["Analyse IA des photos", Sparkles],
-    ["Bot WhatsApp", BellRing],
-    ["Alertes météo réelles", CloudRain],
-    ["Version wolof audio", Waves],
-    ["Carte de risque", Layers3],
+    ["Lecture des photos (hauteur, confiance)", "MVP", Sparkles],
+    ["Floutage des visages et plaques", "MVP", ShieldCheck],
+    ["Détection des doublons", "MVP", Layers3],
+    ["Messages vocaux (français, wolof)", "V2", Waves],
+    ["Lieu depuis un texte ou un vocal", "V2", MapPin],
+    ["Réponses WhatsApp depuis la carte", "V2", BellRing],
+    ["Modération des contenus", "V2", ShieldCheck],
+    ["Rapports automatiques pour la mairie", "V3", FileText],
+    ["Prédiction des quartiers à risque", "V3", TrendingUp],
+    ["Alertes météo réelles", "V3", CloudRain],
   ] as const;
   return (
     <section className="roadmap">
       <div className="section-heading">
-        <div><p className="eyebrow">Feuille de route</p><h2>Ce que nous voulons construire ensuite</h2></div>
+        <div><p className="eyebrow">Feuille de route IA</p><h2>Ce que nous voulons construire ensuite</h2></div>
         <span className="soon-pill">Bientôt</span>
       </div>
-      <p>Ces fonctions présentent notre vision. Elles ne sont pas encore actives dans cette démo.</p>
+      <p>Ces fonctions présentent notre vision. Elles ne sont pas encore actives dans cette démo. Le premier prototype se concentre sur la lecture des photos, le floutage des visages et plaques, et la détection des doublons.</p>
       <div className="roadmap-grid">
-        {items.map(([label, Icon]) => <div key={label}><Icon size={21} /><span>{label}</span><small>Bientôt</small></div>)}
+        {items.map(([label, priority, Icon]) => (
+          <div key={label}><Icon size={21} /><span>{label}</span><small className={`priority-${priority.toLowerCase()}`}>{priority}</small></div>
+        ))}
       </div>
     </section>
   );
@@ -328,7 +381,9 @@ function HomePage() {
 
 function MapController({ center }: { center?: [number, number] }) {
   const map = useMap();
-  if (center) map.flyTo(center, 14, { duration: 0.8 });
+  useEffect(() => {
+    if (center) map.flyTo(center, 14, { duration: 0.8 });
+  }, [center, map]);
   return null;
 }
 
@@ -337,11 +392,13 @@ function MapCanvas({
   selected,
   newReport,
   compact = false,
+  center,
 }: {
   onSelect?: (id: number) => void;
   selected?: number | null;
   newReport?: boolean;
   compact?: boolean;
+  center?: [number, number];
 }) {
   const visibleReports = compact ? reports.slice(0, 3) : reports;
   return (
@@ -370,7 +427,7 @@ function MapCanvas({
           <Popup><b>Nouveau point noir</b><br />Votre signalement vient d'être ajouté.</Popup>
         </CircleMarker>
       )}
-      <MapController />
+      <MapController center={center} />
     </MapContainer>
   );
 }
@@ -423,8 +480,17 @@ function ReportDetail({ reportId, onClose }: { reportId: number; onClose: () => 
 function MapPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const focus = searchParams.get("focus");
+  const focusReport = focus ? reports.find((report) => report.place === focus) : undefined;
+  const focusCenter = useMemo<[number, number] | undefined>(
+    () => (focusReport ? [focusReport.lat, focusReport.lng] : undefined),
+    [focusReport],
+  );
   const [filter, setFilter] = useState("Aujourd'hui");
-  const [selected, setSelected] = useState<number | null>(location.state?.newReport ? 1 : null);
+  const [selected, setSelected] = useState<number | null>(
+    focusReport ? focusReport.id : location.state?.newReport ? 1 : null,
+  );
   const [legendOpen] = useState(true);
   const newReport = Boolean(location.state?.newReport);
   return (
@@ -447,7 +513,7 @@ function MapPage() {
         </div>
       </aside>
       <section className="map-stage">
-        <MapCanvas onSelect={setSelected} selected={selected} newReport={newReport} />
+        <MapCanvas onSelect={setSelected} selected={selected} newReport={newReport} center={focusCenter} />
         <div className="map-top-mobile"><Filters active={filter} onChange={setFilter} /></div>
         <div className="map-status"><span className="live-dot" /> 72 points actifs <small>démo</small></div>
         {legendOpen && <Legend />}
@@ -571,33 +637,116 @@ function ReportPage() {
 
 function RankingPage() {
   const [filter, setFilter] = useState("Aujourd'hui");
+  const [metric, setMetric] = useState<RankMetric>("volume");
+  const [recurringOnly, setRecurringOnly] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const period = periodFromFilter(filter);
+  const rows = rankRows(metric, period, recurringOnly);
+  const max = Math.max(...rows.map((item) => item.value), 1);
+  const total = rows.reduce((sum, item) => sum + item.value, 0);
+  const top = rows[0];
+  const share = top && total > 0 ? Math.round((top.value / total) * 100) : 0;
+  const detail = rows.find((item) => item.name === selected) ?? null;
+  const unit = rankMetricLabel(metric);
+  const focusMap = (name: string) => navigate(`/carte?focus=${encodeURIComponent(name)}`);
+
+  const exportCsv = () => downloadFile("points-noirs-classement.csv", buildRankingCsv(rows), "text/csv;charset=utf-8");
+  const exportGeoJson = () => downloadFile("points-noirs-classement.geojson", buildRankingGeoJson(rows), "application/geo+json");
+  const exportPdf = () => window.print();
+
   return (
     <main className="content-page ranking-page">
       <div className="content-container">
         <PageTitle eyebrow="Priorités citoyennes" title="Quartiers les plus touchés" description="Une lecture simple des signalements reçus pour aider à prioriser les interventions." />
-        <div className="ranking-toolbar"><Filters active={filter} onChange={setFilter} /><DemoBadge /></div>
+        <div className="ranking-toolbar">
+          <Filters active={filter} onChange={setFilter} />
+          <div className="ranking-metrics" role="group" aria-label="Indicateur affiché">
+            {metricOptions.map((option) => (
+              <button key={option.key} className={`rank-chip ${metric === option.key ? "active" : ""}`} onClick={() => setMetric(option.key)}>
+                {option.label}
+              </button>
+            ))}
+            <button className={`rank-chip ${recurringOnly ? "active" : ""}`} onClick={() => setRecurringOnly((value) => !value)}>
+              <TrendingUp size={14} /> Zones récurrentes
+            </button>
+          </div>
+          <div className="ranking-actions">
+            <DemoBadge />
+            <button className="rank-export" onClick={exportCsv}><Download size={15} /> CSV</button>
+            <button className="rank-export" onClick={exportGeoJson}><FileJson size={15} /> GeoJSON</button>
+            <button className="rank-export" onClick={exportPdf}><FileText size={15} /> PDF</button>
+          </div>
+        </div>
         <div className="ranking-layout">
           <section className="ranking-list">
-            {rankData.map((item, index) => (
-              <button key={item.name} className="rank-item" onClick={() => navigate("/carte")}>
+            {rows.map((item, index) => (
+              <button key={item.name} className={`rank-item ${selected === item.name ? "active" : ""}`} onClick={() => setSelected(item.name)}>
                 <span className={`rank-number ${index < 3 ? "top" : ""}`}>{String(index + 1).padStart(2, "0")}</span>
                 <span className="rank-main">
                   <span className="rank-title"><b>{item.name}</b>{item.recurring && <em>Zone récurrente</em>}</span>
-                  <span className="bar-track"><i style={{ width: `${item.count * 4}%` }} /></span>
+                  <span className="bar-track"><i style={{ width: `${Math.round((item.value / max) * 100)}%` }} /></span>
                   <small><TrendingUp size={13} /> {item.trend}</small>
                 </span>
-                <span className="rank-count"><b>{item.count}</b><small>signalements</small>{item.black && <em>Point noir</em>}</span>
+                <span className="rank-count"><b>{item.value}</b><small>{unit}</small>{item.black && <em>Point noir</em>}</span>
                 <ArrowRight size={18} />
               </button>
             ))}
           </section>
-          <aside className="ranking-summary">
-            <div><span className="summary-icon"><BarChart3 /></span><h2>72 signalements</h2><p>recensés sur 5 quartiers dans cette démonstration.</p></div>
-            <hr />
-            <p><b>À retenir</b>Keur Massar concentre un tiers des points actifs et les niveaux les plus élevés.</p>
-            <Button onClick={() => navigate("/carte")}>Explorer la carte <ArrowRight size={17} /></Button>
-          </aside>
+          {detail ? (
+            <aside className="ranking-detail">
+              <button className="icon-btn detail-close" aria-label="Fermer le détail" onClick={() => setSelected(null)}><X size={17} /></button>
+              <p className="eyebrow">Détail du quartier</p>
+              <h2>{detail.name}</h2>
+              <div className="detail-tags">
+                {detail.black && <span className="tag-black">Point noir</span>}
+                {detail.recurring && <span className="tag-recurring">Zone récurrente</span>}
+              </div>
+              <div className="detail-stat">
+                <b>{detail.value}</b>
+                <span>{unit} · {total > 0 ? Math.round((detail.value / total) * 100) : 0} % du total</span>
+              </div>
+              {(() => {
+                const delta = seasonDelta(detail);
+                return (
+                  <div className={`detail-season ${delta >= 0 ? "up" : "down"}`}>
+                    <TrendingUp size={15} />
+                    <span><b>{delta >= 0 ? `+${delta}` : delta} %</b> vs saison précédente ({detail.previous} signalements)</span>
+                  </div>
+                );
+              })()}
+              <div className="detail-chart">
+                <span>Évolution sur 7 jours</span>
+                <Sparkline data={detail.history} color="#3d5f58" />
+              </div>
+              <div className="detail-levels">
+                <span className="detail-levels-title">Répartition par niveau (24 h)</span>
+                {(Object.keys(levelMeta) as Level[]).map((level) => {
+                  const value = detail.levels[level];
+                  const pct = detail.counts.day > 0 ? Math.round((value / detail.counts.day) * 100) : 0;
+                  return (
+                    <span key={level} className="detail-level">
+                      <i className={`legend-dot ${level}`} />
+                      <b>{levelMeta[level].short}</b>
+                      <span className="detail-level-bar"><i style={{ width: `${pct}%`, background: levelMeta[level].color }} /></span>
+                      <small>{value}</small>
+                    </span>
+                  );
+                })}
+              </div>
+              <Button className="w-full" onClick={() => focusMap(detail.name)}><MapIcon size={17} /> Voir sur la carte</Button>
+              <Button variant="secondary" className="w-full" onClick={() => navigate("/signaler")}><Plus size={17} /> Signaler ici</Button>
+            </aside>
+          ) : (
+            <aside className="ranking-summary">
+              <div><span className="summary-icon"><BarChart3 /></span><h2>{total} {unit}</h2><p>recensés sur {rows.length} quartiers dans cette démonstration.</p></div>
+              <hr />
+              <p><b>À retenir</b>{top ? `${top.name} concentre ${share} % du total et les niveaux les plus élevés.` : "Aucun quartier ne correspond à ce filtre."}</p>
+              <p className="summary-hint">Touchez un quartier pour voir son détail et l'ouvrir sur la carte.</p>
+              <Button onClick={() => navigate("/carte")}>Explorer la carte <ArrowRight size={17} /></Button>
+            </aside>
+          )}
         </div>
         <Roadmap />
       </div>
@@ -617,7 +766,8 @@ function AboutPage() {
           <article><span><Info /></span><h2>Nos limites</h2><p>Les informations sont citoyennes et peuvent être incomplètes. Cet outil ne remplace pas les secours.</p></article>
         </section>
         <section className="wolof-note"><p className="eyebrow">Bienvenue</p><h2>Dalal ak jàmm — soyez les bienvenus.</h2><p>Quelques contenus pourront être proposés en wolof. Toute traduction sera validée par un locuteur natif avant mise en ligne.</p></section>
-        <section className="opensource-card"><Code2 size={30} /><div><h2>Ouvert par principe</h2><p>Le code a vocation à être publié sous licence MIT. Une équipe de 4 contribue à cette démo avec le soutien de Galsen DEV et MLH.</p></div><a href="https://github.com"><Code2 size={17} /> Explorer le projet</a></section>
+        <section className="wolof-note"><p className="eyebrow">Principes</p><h2>Ce que l'IA ne fait pas.</h2><p>Elle ne décide jamais seule d'une urgence, elle n'invente pas d'information — elle répond « donnée insuffisante » quand elle ne sait pas — et elle indique toujours un niveau de confiance.</p></section>
+        <section className="opensource-card"><Code2 size={30} /><div><h2>Ouvert par principe</h2><p>Le code a vocation à être publié sous licence MIT. Une équipe de 4 contribue à cette démo avec le soutien de Galsen DEV et MLH.</p></div><a href="https://github.com/ksspape5-jpg/noxmap"><Code2 size={17} /> Explorer le projet</a></section>
         <Roadmap />
       </div>
     </main>
