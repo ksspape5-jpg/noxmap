@@ -39,8 +39,10 @@ export default function Hero() {
           <ShieldCheck size={17} aria-hidden className="flex-none text-success" /> Aide à réagir, ne remplace ni les alertes officielles ni les secours.
         </p>
       </div>
-      <div className={REVEAL} style={revealDelay(160)}>
-        <MiniMapVisual />
+      <div className={cn("max-md:transform-none md:perspective-[1400px]", REVEAL)} style={revealDelay(160)}>
+        <div className="transition-transform duration-700 ease-out md:[transform:rotateX(6deg)_rotateY(-10deg)] md:hover:[transform:rotateX(0deg)_rotateY(0deg)]">
+          <MiniMapVisual />
+        </div>
       </div>
     </section>
   );
