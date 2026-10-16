@@ -33,7 +33,7 @@ const MARKERS: { level: Level; label: string; className: string }[] = [
 
 export default function MiniMapVisual() {
   return (
-    <div className={MAP_CLASSES} aria-label="Aperçu de la carte des signalements">
+    <div className={MAP_CLASSES} role="img" aria-label="Aperçu de la carte des signalements : 72 points actifs, mis à jour il y a 4 minutes">
       {ROADS.map((position) => (
         <div key={position} className={cn(ROAD_CLASSES, position)} />
       ))}
