@@ -6,11 +6,12 @@ import { Button, DemoBadge } from "@/shared/ui";
 import MiniMapVisual from "./MiniMapVisual";
 
 const HERO_CLASSES = cn(
-  "relative isolate mx-auto grid min-h-150 max-w-310 grid-cols-[.85fr_1.15fr] items-center gap-17 overflow-hidden px-6 pt-17.5 pb-20",
+  "relative isolate mx-auto grid min-h-150 max-w-310 grid-cols-[.85fr_1.15fr] items-center gap-17 px-6 pt-17.5 pb-20",
   "max-md:flex max-md:min-h-auto max-md:flex-col max-md:items-stretch max-md:gap-8 max-md:px-4.5 max-md:pt-10 max-md:pb-10",
 );
 
-const DECOR_CLASSES = "pointer-events-none absolute inset-0 -z-10";
+// Le flou des halos doit rester dans la section, sans rogner l'ombre de la mini-carte.
+const DECOR_CLASSES = "pointer-events-none absolute inset-0 -z-10 overflow-hidden";
 
 const REVEAL = "animate-[fadeSlideUp_.55s_ease-out_both]";
 const revealDelay = (ms: number): CSSProperties => ({ animationDelay: `${ms}ms` });
