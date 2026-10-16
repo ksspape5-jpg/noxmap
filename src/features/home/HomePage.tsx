@@ -1,4 +1,5 @@
 import Roadmap from "@/shared/roadmap";
+import FinalCta from "./components/FinalCta";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 import LevelsGuide from "./components/LevelsGuide";
@@ -11,9 +12,10 @@ export default function HomePage() {
       <Hero />
       <TrustStrip />
       <LevelsGuide />
-      <StatsSection />
       <HowItWorks />
+      <StatsSection />
       <Roadmap />
+      <FinalCta />
     </main>
   );
 }
