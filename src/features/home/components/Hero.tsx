@@ -32,15 +32,15 @@ export default function Hero() {
           Une carte citoyenne des rues inondées à Dakar et dans sa banlieue, alimentée par les habitants.
         </p>
         <div className={cn("mt-7 mb-5 flex gap-2.5 max-md:w-full max-md:flex-col", REVEAL)} style={revealDelay(180)}>
-          <Button className="group max-md:w-full active:scale-[.98]" onClick={() => navigate("/carte")}>
-            <MapIcon size={19} className="transition-transform duration-200 group-hover:translate-x-0.5" /> Voir la carte
+          <Button className="group max-md:w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[.98]" onClick={() => navigate("/carte")}>
+            <MapIcon size={19} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" /> Voir la carte
           </Button>
-          <Button className="group max-md:w-full hover:bg-subtle active:scale-[.98]" variant="secondary" onClick={() => navigate("/signaler")}>
-            <Plus size={19} className="transition-transform duration-200 group-hover:rotate-90" /> Ici c'est inondé
+          <Button className="group max-md:w-full hover:bg-subtle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[.98]" variant="secondary" onClick={() => navigate("/signaler")}>
+            <Plus size={19} aria-hidden className="transition-transform duration-200 group-hover:rotate-90" /> Ici c'est inondé
           </Button>
         </div>
         <p className={cn("flex items-center gap-2 text-[11px] leading-normal text-muted max-md:items-start", REVEAL)} style={revealDelay(240)}>
-          <ShieldCheck size={17} className="flex-none text-success" /> Aide à réagir, ne remplace ni les alertes officielles ni les secours.
+          <ShieldCheck size={17} aria-hidden className="flex-none text-success" /> Aide à réagir, ne remplace ni les alertes officielles ni les secours.
         </p>
       </div>
       <div className={REVEAL} style={revealDelay(160)}><MiniMapVisual /></div>
