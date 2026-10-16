@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 import LevelsGuide from "./components/LevelsGuide";
 import StatsSection from "./components/StatsSection";
+import Testimonials from "./components/Testimonials";
 import TrustStrip from "./components/TrustStrip";
 import UseCases from "./components/UseCases";
 
@@ -19,6 +20,7 @@ export default function HomePage() {
       <StatsSection />
       <Roadmap className="[&_h2]:font-bold" />
       <Faq />
+      <Testimonials />
       <FinalCta />
     </main>
   );
