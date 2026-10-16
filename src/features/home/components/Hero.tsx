@@ -32,9 +32,11 @@ export default function Hero() {
           Une carte citoyenne des rues inondées à Dakar et dans sa banlieue, alimentée par les habitants.
         </p>
         <div className={cn("mt-7 mb-5 flex gap-2.5 max-md:w-full max-md:flex-col", REVEAL)} style={revealDelay(180)}>
-          <Button className="max-md:w-full" onClick={() => navigate("/carte")}><MapIcon size={19} /> Voir la carte</Button>
-          <Button className="max-md:w-full" variant="secondary" onClick={() => navigate("/signaler")}>
-            <Plus size={19} /> Ici c'est inondé
+          <Button className="group max-md:w-full active:scale-[.98]" onClick={() => navigate("/carte")}>
+            <MapIcon size={19} className="transition-transform duration-200 group-hover:translate-x-0.5" /> Voir la carte
+          </Button>
+          <Button className="group max-md:w-full hover:bg-subtle active:scale-[.98]" variant="secondary" onClick={() => navigate("/signaler")}>
+            <Plus size={19} className="transition-transform duration-200 group-hover:rotate-90" /> Ici c'est inondé
           </Button>
         </div>
         <p className={cn("flex items-center gap-2 text-[11px] leading-normal text-muted max-md:items-start", REVEAL)} style={revealDelay(240)}>
