@@ -6,20 +6,20 @@ const TESTIMONIALS = [
   {
     name: "Awa Ndiaye",
     place: "Pikine",
-    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=96&h=96&q=80",
+    photo: "https://images.unsplash.com/photo-1620424037570-15137a4a562d?auto=format&fit=crop&w=96&h=96&q=80",
     quote: "Avant, je partais sans savoir si la route du marché était praticable. Maintenant je vérifie la carte en 30 secondes, ça m'évite de rebrousser chemin.",
   },
   {
     name: "Modou Fall",
     place: "Keur Massar",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=96&h=96&q=80",
+    photo: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=96&h=96&q=80",
     quote: "Comme chauffeur, je préviens mes collègues des points noirs. On gagne du temps et on abîme moins les voitures.",
   },
   {
     name: "Fatou Sarr",
     place: "Thiaroye",
-    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=96&h=96&q=80",
-    quote: "J'ai signalé une rue bloquée devant l'école. Le lendemain, des voisins avaient confirmé : l'info devient vraiment fiable.",
+    photo: "https://images.unsplash.com/photo-1712821125604-4ca6b1f86488?auto=format&fit=crop&w=96&h=96&q=80",
+    quote: "J'ai signalé une rue bloquée devant l'école. Après confirmation des voisins, la mairie a pu amener des moto-pompes pour évacuer l'eau et résoudre le problème.",
   },
 ];
 
