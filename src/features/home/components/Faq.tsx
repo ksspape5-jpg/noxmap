@@ -26,7 +26,7 @@ export default function Faq() {
   return (
     <section className="mx-auto max-w-310 px-6 pb-16 max-md:px-4.5 max-md:pb-10">
       <div className="mb-8 max-w-150 max-md:mb-6">
-        <Eyebrow>Questions fréquentes</Eyebrow>
+        <Eyebrow className="text-[12px] tracking-[.1em]">Questions fréquentes</Eyebrow>
         <h2 className="text-balance text-[32px] font-bold leading-[1.12] tracking-[-.04em] max-md:text-[26px]">
           Vous vous demandez…
         </h2>

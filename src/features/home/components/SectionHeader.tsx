@@ -8,8 +8,8 @@ export default function SectionHeader({ eyebrow, title, children }: SectionHeade
   return (
     <div className="mb-7 flex items-end justify-between gap-5 max-md:items-start">
       <div>
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <h2 className="text-balance text-[28px] font-bold tracking-[-.035em] max-md:text-2xl">{title}</h2>
+        <Eyebrow className="text-[12px] tracking-[.1em]">{eyebrow}</Eyebrow>
+        <h2 className="text-balance text-[32px] font-bold leading-[1.12] tracking-[-.035em] max-md:text-[26px]">{title}</h2>
       </div>
       {children}
     </div>

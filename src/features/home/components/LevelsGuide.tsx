@@ -15,8 +15,8 @@ export default function LevelsGuide() {
     <section className="mx-auto max-w-310 px-6 py-16 max-md:px-4.5 max-md:py-10">
       <div className="grid grid-cols-[.95fr_1.05fr] items-center gap-14 max-md:grid-cols-1 max-md:gap-8">
         <div>
-          <Eyebrow>Comprendre en un coup d'œil</Eyebrow>
-          <h2 className="text-balance text-[34px] font-bold leading-[1.12] tracking-[-.04em] max-md:text-[26px]">
+          <Eyebrow className="text-[12px] tracking-[.1em]">Comprendre en un coup d'œil</Eyebrow>
+          <h2 className="text-balance text-[32px] font-bold leading-[1.12] tracking-[-.04em] max-md:text-[26px]">
             Un code couleur pour décider vite où passer
           </h2>
           <p className="mt-4 max-w-110 text-pretty text-[15px] leading-[1.7] text-muted">
