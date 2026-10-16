@@ -19,10 +19,10 @@ export default function Hero() {
     <section className={HERO_CLASSES}>
       <div className="flex flex-col items-start">
         <DemoBadge className={REVEAL} />
-        <h1 className={cn("my-5.5 text-[clamp(44px,5vw,68px)] leading-[1.03] tracking-[-.055em] max-md:my-4.5 max-md:text-[40px]", REVEAL)} style={revealDelay(60)}>
+        <h1 className={cn("my-5.5 text-balance text-[clamp(44px,5vw,68px)] font-extrabold leading-[1.02] tracking-[-.055em] max-md:my-4.5 max-md:text-[40px]", REVEAL)} style={revealDelay(60)}>
           Voir où l'eau monte.<br /><em className="text-primary not-italic">Agir plus vite.</em>
         </h1>
-        <p className={cn("max-w-130 text-base leading-[1.7] text-muted max-md:text-sm", REVEAL)} style={revealDelay(120)}>
+        <p className={cn("max-w-130 text-pretty text-base leading-[1.7] text-muted max-md:text-sm", REVEAL)} style={revealDelay(120)}>
           Une carte citoyenne des rues inondées à Dakar et dans sa banlieue, alimentée par les habitants.
         </p>
         <div className={cn("mt-7 mb-5 flex gap-2.5 max-md:w-full max-md:flex-col", REVEAL)} style={revealDelay(180)}>
