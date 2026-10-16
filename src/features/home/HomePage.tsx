@@ -14,7 +14,7 @@ export default function HomePage() {
       <LevelsGuide />
       <HowItWorks />
       <StatsSection />
-      <Roadmap />
+      <Roadmap className="[&_h2]:font-bold" />
       <FinalCta />
     </main>
   );

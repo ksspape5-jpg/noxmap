@@ -1,6 +1,7 @@
 import { Clock, MapPin, ThumbsUp, TrendingUp, Waves } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
-import { DemoBadge, SectionHeading } from "@/shared/ui";
+import { DemoBadge } from "@/shared/ui";
+import SectionHeader from "./SectionHeader";
 
 const STATS = [
   { value: "72", label: "signalements actifs", note: "+16 depuis ce matin", trend: true, icon: Waves, tone: "bg-primary-soft text-primary" },
@@ -12,9 +13,9 @@ const STATS = [
 export default function StatsSection() {
   return (
     <section className="mx-auto max-w-310 px-6 pb-16 max-md:px-4.5 max-md:pb-10">
-      <SectionHeading eyebrow="La situation aujourd'hui" title="Les rues suivies en direct">
+      <SectionHeader eyebrow="La situation aujourd'hui" title="Les rues suivies en direct">
         <DemoBadge />
-      </SectionHeading>
+      </SectionHeader>
       <div className="grid grid-cols-4 gap-3.5 max-md:grid-cols-2">
         {STATS.map(({ value, label, note, trend, icon: Icon, tone }) => (
           <article

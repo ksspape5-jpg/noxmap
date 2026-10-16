@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { BellRing, ChevronRight, Map as MapIcon, MapPin } from "lucide-react";
-import { SectionHeading } from "@/shared/ui";
+import SectionHeader from "./SectionHeader";
 
 const STEPS = [
   { number: "01", icon: MapPin, title: "Signaler", text: "Décrivez la rue et la hauteur d'eau en moins d'une minute, avec une photo si vous pouvez." },
@@ -11,11 +11,11 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <section className="mx-auto max-w-310 px-6 pb-16 max-md:px-4.5 max-md:pb-10">
-      <SectionHeading eyebrow="Simple et citoyen" title="Trois gestes pour mieux circuler">
+      <SectionHeader eyebrow="Simple et citoyen" title="Trois gestes pour mieux circuler">
         <span className="rounded-full bg-primary-soft px-3.5 py-1.5 text-[11px] font-bold text-primary-dark">
           En quelques minutes
         </span>
-      </SectionHeading>
+      </SectionHeader>
       <div className="flex items-stretch gap-3.5 max-md:flex-col">
         {STEPS.map(({ number, icon: Icon, title, text }, index) => (
           <Fragment key={number}>
