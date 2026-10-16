@@ -19,15 +19,14 @@ export default function HowItWorks() {
       <div className="flex items-stretch gap-3.5 max-md:flex-col">
         {STEPS.map(({ number, icon: Icon, title, text }, index) => (
           <Fragment key={number}>
-            <article className="group relative flex flex-1 flex-col overflow-hidden rounded-3xl border border-border bg-white p-7 transition-all duration-200 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_16px_40px_rgba(16,35,28,.1)] max-md:p-6">
-              <span
-                aria-hidden
-                className="absolute right-5 top-4 text-[44px] font-extrabold leading-none tracking-[-.04em] text-subtle transition-colors duration-200 group-hover:text-primary-soft"
-              >
-                {number}
-              </span>
-              <div className="mb-6 grid size-13 place-items-center rounded-2xl bg-primary-soft text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-white">
-                <Icon size={24} aria-hidden />
+            <article className="group relative flex flex-1 flex-col rounded-3xl border border-border bg-white p-7 transition-all duration-200 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_16px_40px_rgba(16,35,28,.1)] max-md:p-6">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="grid size-12 place-items-center rounded-full bg-primary text-[15px] font-extrabold tracking-[-.02em] text-white shadow-brand">
+                  {number}
+                </span>
+                <span className="grid size-11 place-items-center rounded-full bg-primary-soft text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-white">
+                  <Icon size={20} aria-hidden />
+                </span>
               </div>
               <h3 className="text-lg font-bold tracking-[-.01em]">{title}</h3>
               <p className="mt-2 text-[13.5px] leading-[1.65] text-muted">{text}</p>
