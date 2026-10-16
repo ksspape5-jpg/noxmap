@@ -1,37 +1,41 @@
-import { TrendingUp } from "lucide-react";
+import { Clock, MapPin, ThumbsUp, TrendingUp, Waves } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
-import { DemoBadge } from "@/shared/ui";
+import { DemoBadge, SectionHeading } from "@/shared/ui";
 
 const STATS = [
-  { value: "72", label: "signalements actifs", note: "+16 depuis ce matin", trend: true },
-  { value: "5", label: "quartiers touchés", note: "sur la zone de démo" },
-  { value: "8 min", label: "dernier point noir", note: "Keur Massar" },
-  { value: "18", label: "points confirmés", note: "par plusieurs habitants" },
+  { value: "72", label: "signalements actifs", note: "+16 depuis ce matin", trend: true, icon: Waves, tone: "bg-primary-soft text-primary" },
+  { value: "5", label: "quartiers touchés", note: "sur la zone de démo", icon: MapPin, tone: "bg-ankle-soft text-ankle-ink" },
+  { value: "8 min", label: "dernier point noir", note: "à Keur Massar", icon: Clock, tone: "bg-knee-soft text-knee-ink" },
+  { value: "18", label: "points confirmés", note: "par plusieurs habitants", icon: ThumbsUp, tone: "bg-success-soft text-success" },
 ];
-
-// Bordures internes : 4 colonnes sur desktop, grille 2×2 sur mobile.
-const STAT_CLASSES = cn(
-  "flex flex-col border-r border-border p-6 last:border-0",
-  "max-md:border-b max-md:p-4.5 max-md:nth-2:border-r-0 max-md:nth-[n+3]:border-b-0",
-);
 
 export default function StatsSection() {
   return (
-    <section className="mx-auto max-w-310 px-6 pb-16 max-md:px-4.5 max-md:pb-8.5">
-      <div className="mb-3.5 flex items-center justify-between text-[11px] text-muted">
-        <span>La situation aujourd'hui</span>
+    <section className="mx-auto max-w-310 px-6 pb-16 max-md:px-4.5 max-md:pb-10">
+      <SectionHeading eyebrow="La situation aujourd'hui" title="Les rues suivies en direct">
         <DemoBadge />
-      </div>
-      <div className="grid grid-cols-4 overflow-hidden rounded-[18px] border border-border bg-white max-md:grid-cols-2">
-        {STATS.map(({ value, label, note, trend }) => (
-          <div key={label} className={STAT_CLASSES}>
-            <strong className="text-[28px] tracking-[-.04em] max-md:text-2xl">{value}</strong>
-            <span className="mt-0.75 mb-3.5 text-xs text-muted max-md:text-[10px]">{label}</span>
-            <small className="flex items-center gap-1.25 text-[10px] text-success">
-              {trend && <TrendingUp size={13} />}
-              {note}
-            </small>
-          </div>
+      </SectionHeading>
+      <div className="grid grid-cols-4 gap-3.5 max-md:grid-cols-2">
+        {STATS.map(({ value, label, note, trend, icon: Icon, tone }) => (
+          <article
+            key={label}
+            className="group rounded-3xl border border-border bg-white p-5.5 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(16,35,28,.1)] max-md:p-4.5"
+          >
+            <div className="flex items-center justify-between">
+              <span className={cn("grid size-10 place-items-center rounded-xl", tone)}>
+                <Icon size={19} aria-hidden />
+              </span>
+              {trend && (
+                <span className="flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.75 text-[10px] font-bold text-success">
+                  <TrendingUp size={12} aria-hidden />
+                  Hausse
+                </span>
+              )}
+            </div>
+            <strong className="mt-4 block text-[30px] font-extrabold leading-none tracking-[-.04em] max-md:text-2xl">{value}</strong>
+            <span className="mt-1.5 block text-xs text-muted">{label}</span>
+            <small className="mt-2.5 block border-t border-border pt-2.5 text-[10px] text-muted">{note}</small>
+          </article>
         ))}
       </div>
     </section>
