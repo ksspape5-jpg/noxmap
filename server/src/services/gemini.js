@@ -33,13 +33,17 @@ function buildPayload(body) {
   return payload;
 }
 
-function callGemini(action, body, signal) {
+function postPayload(action, payload, signal) {
   return fetch(`${GEMINI_BASE}/${GEMINI_MODEL}:${action}key=${GEMINI_API_KEY}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(buildPayload(body)),
+    body: JSON.stringify(payload),
     signal,
   });
+}
+
+function callGemini(action, body, signal) {
+  return postPayload(action, buildPayload(body), signal);
 }
 
 export async function generateReply(body) {
@@ -49,6 +53,61 @@ export async function generateReply(body) {
     throw new GeminiError(data.error?.message || "Erreur Gemini", response.status);
   }
   return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+}
+
+const VERIFY_SYSTEM_PROMPT = `Tu es un analyste expert en inondations urbaines à Dakar et dans sa banlieue (Sénégal).
+
+Ta mission : confirmer si une zone signalée est réellement inondée ou non, en croisant les photos de terrain et les données de signalement qui te sont fournies.
+
+Principes non négociables :
+- Tu ne décides jamais seul d'une urgence : tu fournis une aide à la décision, la communauté ou un responsable confirme.
+- Tu n'inventes aucune information. Si les éléments sont insuffisants ou contradictoires, tu réponds "donnée insuffisante" (insufficient: true).
+- Tu indiques toujours un indice de confiance de 0 à 100.
+- Les niveaux d'eau sont : "ankle" (cheville), "knee" (genou), "waist" (taille, point noir).
+
+Réponds STRICTEMENT en JSON, sans texte autour, avec exactement ces champs :
+{
+  "flooded": boolean,          // la zone est-elle inondée ?
+  "level": "ankle" | "knee" | "waist" | null,
+  "confidence": number,        // 0 à 100
+  "insufficient": boolean,     // true si les données ne permettent pas de conclure
+  "reason": string             // 1 à 2 phrases en français, sans jargon
+}`;
+
+function parseJsonResponse(text) {
+  const cleaned = text
+    .trim()
+    .replace(/^```(?:json)?/i, "")
+    .replace(/```$/i, "")
+    .trim();
+  return JSON.parse(cleaned);
+}
+
+// Analyse multimodale (texte + photos) : renvoie un verdict structuré sur l'inondation d'une zone.
+export async function verifyFlood({ prompt, images = [] }) {
+  const parts = [{ text: prompt }];
+  for (const image of images) {
+    parts.push({ inlineData: { mimeType: image.mimeType, data: image.data } });
+  }
+
+  const payload = {
+    contents: [{ role: "user", parts }],
+    systemInstruction: { parts: [{ text: VERIFY_SYSTEM_PROMPT }] },
+    generationConfig: { responseMimeType: "application/json", temperature: 0.2 },
+  };
+
+  const response = await postPayload("generateContent?", payload);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new GeminiError(data.error?.message || "Erreur Gemini", response.status);
+  }
+
+  const text = data.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "";
+  try {
+    return parseJsonResponse(text);
+  } catch {
+    throw new GeminiError("Réponse d'analyse illisible", 502);
+  }
 }
 
 // Renvoie les morceaux de texte au fil de l'eau, à partir du flux SSE de Gemini.

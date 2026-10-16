@@ -3,6 +3,7 @@ import cors from "cors";
 import { CORS_ALLOWLIST } from "./config.js";
 import rateLimit from "./middleware/rateLimit.js";
 import chatRouter from "./routes/chat.js";
+import verifyRouter from "./routes/verify.js";
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use(
 app.use(express.json({ limit: "256kb" }));
 
 app.use("/api/chat", rateLimit, chatRouter);
+app.use("/api/verify", rateLimit, verifyRouter);
 
 export default app;
