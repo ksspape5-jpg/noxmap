@@ -4,6 +4,7 @@ import { ContentPage, PageTitle } from "@/shared/ui";
 import AboutGrid from "./components/AboutGrid";
 import AiPrinciples from "./components/AiPrinciples";
 import OpenSourceCard from "./components/OpenSourceCard";
+import ProjectStatus from "./components/ProjectStatus";
 import WolofNote from "./components/WolofNote";
 
 export default function AboutPage() {
@@ -25,6 +26,7 @@ export default function AboutPage() {
       <WolofNote />
       <AiPrinciples />
       <OpenSourceCard />
+      <ProjectStatus />
       <Roadmap className="mt-15 mb-0 max-md:-mx-0.75 max-md:mt-8.75 max-md:mb-0" />
     </ContentPage>
   );
