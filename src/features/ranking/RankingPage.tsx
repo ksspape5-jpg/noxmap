@@ -16,7 +16,8 @@ export default function RankingPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const rows = rankRows(metric, periodFromFilter(filter), recurringOnly);
+  const period = periodFromFilter(filter);
+  const rows = rankRows(metric, period, recurringOnly);
   const max = Math.max(...rows.map((item) => item.value), 1);
   const total = rows.reduce((sum, item) => sum + item.value, 0);
   const detail = rows.find((item) => item.name === selected) ?? null;
@@ -60,6 +61,7 @@ export default function RankingPage() {
             detail={detail}
             total={total}
             unit={unit}
+            period={period}
             onClose={() => setSelected(null)}
             onShowOnMap={() => navigate(`/carte?focus=${encodeURIComponent(detail.name)}`)}
             onReport={() => navigate("/signaler")}

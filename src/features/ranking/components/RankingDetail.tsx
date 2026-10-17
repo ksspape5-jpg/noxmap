@@ -2,7 +2,8 @@ import { Map as MapIcon, Plus, TrendingUp, X } from "lucide-react";
 import { LEVEL_BG, LEVELS, levelMeta } from "@/shared/flood";
 import { cn } from "@/shared/lib/cn";
 import { Button, Eyebrow, IconButton } from "@/shared/ui";
-import { seasonDelta, type RankRow } from "../rankingData";
+import { seasonDelta, type RankPeriod, type RankRow } from "../rankingData";
+import AiVerdict from "./AiVerdict";
 import Sparkline from "./Sparkline";
 
 const CAPTION = "text-[9px] font-extrabold tracking-[.08em] text-muted uppercase";
@@ -12,12 +13,13 @@ type RankingDetailProps = {
   detail: RankRow;
   total: number;
   unit: string;
+  period: RankPeriod;
   onClose: () => void;
   onShowOnMap: () => void;
   onReport: () => void;
 };
 
-export default function RankingDetail({ detail, total, unit, onClose, onShowOnMap, onReport }: RankingDetailProps) {
+export default function RankingDetail({ detail, total, unit, period, onClose, onShowOnMap, onReport }: RankingDetailProps) {
   const delta = seasonDelta(detail);
   return (
     <aside className="sticky top-22.5 flex flex-col gap-3.5 rounded-[18px] border border-border bg-white p-5.5 max-md:static print:hidden">
@@ -70,6 +72,7 @@ export default function RankingDetail({ detail, total, unit, onClose, onShowOnMa
           );
         })}
       </div>
+      <AiVerdict entry={detail} period={period} />
       <Button className="w-full" onClick={onShowOnMap}>
         <MapIcon size={17} /> Voir sur la carte
       </Button>
