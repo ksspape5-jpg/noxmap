@@ -25,11 +25,11 @@ export default function AboutPage() {
         </span>
       </p>
       <AboutGrid />
-      <WolofNote />
       <AiPrinciples />
       <OpenSourceCard />
       <ProjectStatus />
       <PrivacyCard />
+      <WolofNote />
       <TeamCredits />
       <Roadmap className="mt-15 mb-0 max-md:-mx-0.75 max-md:mt-8.75 max-md:mb-0" />
     </ContentPage>
