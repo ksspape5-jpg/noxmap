@@ -1,13 +1,15 @@
-import { AlertTriangle, Handshake, User } from "lucide-react";
+import { AlertTriangle, Handshake } from "lucide-react";
 import { Eyebrow } from "@/shared/ui";
 
-// TODO: renseigner les prénoms, noms et rôles réels des 4 membres de l'équipe.
-const MEMBERS = [
-  { name: "À compléter", role: "Rôle à préciser" },
-  { name: "À compléter", role: "Rôle à préciser" },
-  { name: "À compléter", role: "Rôle à préciser" },
-  { name: "À compléter", role: "Rôle à préciser" },
-];
+// TODO: préciser le rôle de chaque membre de l'équipe si nécessaire.
+const MEMBERS = ["Djibril Diasse", "Amacodou Ndiaye", "Papa Assane Kasse", "Mouhamadou Moustapha Fall"];
+
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  const first = parts[0]?.[0] ?? "";
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+  return (first + last).toUpperCase();
+}
 
 export default function TeamCredits() {
   return (
@@ -21,16 +23,15 @@ export default function TeamCredits() {
       </p>
 
       <div className="mt-6 grid grid-cols-4 gap-3.5 max-md:grid-cols-2">
-        {MEMBERS.map((member, index) => (
+        {MEMBERS.map((name) => (
           <article
-            key={index}
+            key={name}
             className="flex flex-col items-center rounded-2xl border border-border bg-white p-5 text-center max-md:p-4"
           >
-            <span className="mb-3 grid size-12 place-items-center rounded-full bg-primary-soft text-primary">
-              <User size={22} aria-hidden />
+            <span className="mb-3 grid size-12 place-items-center rounded-full bg-primary-soft text-[13px] font-bold text-primary">
+              {initials(name)}
             </span>
-            <h3 className="text-[14px] font-bold">{member.name}</h3>
-            <p className="mt-0.5 text-[11.5px] text-muted">{member.role}</p>
+            <h3 className="text-[13.5px] font-bold">{name}</h3>
           </article>
         ))}
       </div>
