@@ -33,7 +33,7 @@ export default function OpenSourceCard() {
             href={href}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-white/20 px-4 text-[12px] font-bold transition-colors hover:border-white/40 hover:bg-white/10 max-md:w-full"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-white/20 px-4 text-[12px] font-bold transition-colors hover:border-white/40 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent max-md:w-full"
           >
             <Icon size={17} aria-hidden /> {label}
           </a>
