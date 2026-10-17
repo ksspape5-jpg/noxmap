@@ -1,8 +1,13 @@
 import { AlertTriangle, Handshake } from "lucide-react";
 import { Eyebrow } from "@/shared/ui";
 
-// TODO: préciser le rôle de chaque membre de l'équipe si nécessaire.
-const MEMBERS = ["Djibril Diasse", "Amacodou Ndiaye", "Papa Assane Kasse", "Mouhamadou Moustapha Fall"];
+// Rôles établis à partir des contributions de chaque membre dans l'historique Git.
+const MEMBERS = [
+  { name: "Djibril Diasse", role: "Produit / idées & tests" },
+  { name: "Amacodou Ndiaye", role: "Architecture & fonctionnalité Signalement" },
+  { name: "Papa Assane Kasse", role: "Mainteneur & IA/PWA" },
+  { name: "Mouhamadou Moustapha Fall", role: "Front-end (Accueil & À propos)" },
+];
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -23,7 +28,7 @@ export default function TeamCredits() {
       </p>
 
       <div className="mt-6 grid grid-cols-4 gap-3.5 max-md:grid-cols-2">
-        {MEMBERS.map((name) => (
+        {MEMBERS.map(({ name, role }) => (
           <article
             key={name}
             className="flex flex-col items-center rounded-2xl border border-border bg-white p-5 text-center max-md:p-4"
@@ -32,6 +37,7 @@ export default function TeamCredits() {
               {initials(name)}
             </span>
             <h3 className="text-[13.5px] font-bold">{name}</h3>
+            <p className="mt-1 text-[11.5px] leading-[1.4] text-muted">{role}</p>
           </article>
         ))}
       </div>
