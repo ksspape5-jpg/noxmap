@@ -4,7 +4,8 @@ import { Map as MapIcon, Plus, ShieldCheck } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Button, DemoBadge } from "@/shared/ui";
 import HeroBackground from "./HeroBackground";
-import MiniMapVisual from "./MiniMapVisual";
+// import MiniMapVisual from "./MiniMapVisual";
+import HeroSlideshow from "../../about/components/HeroSlideshow";
 
 const HERO_CLASSES = cn(
   "relative isolate mx-auto grid min-h-150 max-w-310 grid-cols-[.85fr_1.15fr] items-center gap-17 px-6 pt-17.5 pb-20",
@@ -41,7 +42,8 @@ export default function Hero() {
       </div>
       <div className={cn("max-md:transform-none md:perspective-[1400px]", REVEAL)} style={revealDelay(160)}>
         <div className="transition-transform duration-700 ease-out md:[transform:rotateX(6deg)_rotateY(-10deg)] md:hover:[transform:rotateX(0deg)_rotateY(0deg)]">
-          <MiniMapVisual />
+          {/* <MiniMapVisual /> */}
+          <HeroSlideshow />
         </div>
       </div>
     </section>
