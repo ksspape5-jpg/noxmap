@@ -1,6 +1,6 @@
 {
-  "name": "Points Noirs Dakar",
-  "short_name": "Points Noirs",
+  "name": "NdoxMap",
+  "short_name": "ndoxmap",
   "description": "Carte citoyenne des rues inondées à Dakar et sa banlieue.",
   "lang": "fr",
   "start_url": "/",

@@ -26,9 +26,9 @@ export default function Header() {
         isMap && "fixed inset-x-0 max-md:hidden",
       )}
     >
-      <NavLink to="/" className="flex items-center gap-2.5 text-[15px] font-bold max-md:text-[13px]" aria-label="Accueil Points Noirs Dakar">
+      <NavLink to="/" className="flex items-center gap-2.5 text-[15px] font-bold max-md:text-[13px]" aria-label="Accueil NdoxMap">
         <Logo />
-        <span>Points Noirs <b className="text-primary">Dakar</b></span>
+        <span>Ndox<b className="text-primary">Map</b></span>
       </NavLink>
       <nav className="flex items-center gap-1.5 max-md:hidden">
         {navItems.map(({ to, label, featured }) => (

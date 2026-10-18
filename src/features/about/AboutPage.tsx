@@ -2,8 +2,7 @@ import { AlertTriangle } from "lucide-react";
 import Roadmap from "@/shared/roadmap";
 import { ContentPage, PageTitle } from "@/shared/ui";
 import AboutGrid from "./components/AboutGrid";
-import AiPrinciples from "./components/AiPrinciples";
-import HeroSlideshow from "./components/HeroSlideshow";
+import AboutDemoMedia from "./components/AboutDemoMedia";
 import OpenSourceCard from "./components/OpenSourceCard";
 import PrivacyCard from "./components/PrivacyCard";
 import ProjectStatus from "./components/ProjectStatus";
@@ -19,7 +18,7 @@ export default function AboutPage() {
             className="mb-5"
             eyebrow="À propos du projet"
             title="Une carte construite avec les habitants, pour les habitants."
-            description="À chaque saison des pluies, des rues de Dakar et de sa banlieue deviennent impraticables et l'information fiable en temps réel manque. Points Noirs Dakar est une démonstration open source née au Hacktoberfest 2026 Dakar (Galsen DEV × MLH), où chacun peut signaler et consulter les points noirs d'inondation."
+            description="À chaque saison des pluies, des rues de Dakar et de sa banlieue deviennent impraticables et l'information fiable en temps réel manque. NdoxMap est une démonstration open source née au Hacktoberfest 2026 Dakar (Galsen DEV × MLH), où chacun peut signaler et consulter les points noirs d'inondation."
           />
           <p className="flex items-start gap-2.5 rounded-xl border border-ankle-soft bg-ankle-soft/50 px-4 py-3 text-[12.5px] leading-[1.6] text-ankle-ink max-md:px-3.5">
             <AlertTriangle size={17} aria-hidden className="mt-0.5 flex-none" />
@@ -28,10 +27,9 @@ export default function AboutPage() {
             </span>
           </p>
         </div>
-        <HeroSlideshow />
+        <AboutDemoMedia />
       </div>
       <AboutGrid />
-      <AiPrinciples />
       <OpenSourceCard />
       <ProjectStatus />
       <PrivacyCard />

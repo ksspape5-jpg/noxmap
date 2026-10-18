@@ -68,7 +68,7 @@ export const KNOWLEDGE_BASE: KnowledgeEntry[] = [
   {
     id: "projet",
     keywords: ["projet", "open source", "hacktoberfest", "galsen", "à propos", "licence", "contribuer"],
-    text: "Points Noirs Dakar est un projet citoyen open source né au Hacktoberfest 2026 Dakar (Galsen DEV), couvrant Keur Massar, Pikine, Thiaroye, Guédiawaye et Rufisque. Les données actuelles sont de démonstration.",
+    text: "NdoxMap est un projet citoyen open source né au Hacktoberfest 2026 Dakar (Galsen DEV), couvrant Keur Massar, Pikine, Thiaroye, Guédiawaye et Rufisque. Les données actuelles sont de démonstration.",
   },
   {
     id: "limites",
