@@ -209,7 +209,7 @@ server/
 ├── index.js        Démarrage
 └── src/            Config, middleware, routes, service Gemini
 
-public/             Assets PWA (manifest, service worker, icônes)
+public/             Assets PWA (manifest, service worker, icônes) ; déposer la vidéo de démo sous `demo.mp4`
 ```
 
 **Où trouver quoi ?**
