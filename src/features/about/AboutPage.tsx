@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { AlertTriangle } from "lucide-react";
 import Roadmap from "@/shared/roadmap";
 import { ContentPage, PageTitle } from "@/shared/ui";
@@ -10,6 +12,14 @@ import TeamCredits from "./components/TeamCredits";
 import WolofNote from "./components/WolofNote";
 
 export default function AboutPage() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash === "#demo") {
+      document.getElementById("demo")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [hash]);
+
   return (
     <ContentPage>
       <div className="grid grid-cols-[1.05fr_.95fr] items-center gap-10 max-md:grid-cols-1 max-md:gap-6">

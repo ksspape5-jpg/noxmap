@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { Map as MapIcon, Plus, ShieldCheck } from "lucide-react";
+import { Map as MapIcon, Play, Plus, ShieldCheck } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui";
 import HeroBackground from "./HeroBackground";
@@ -34,6 +34,9 @@ export default function Hero() {
           </Button>
           <Button className="group max-md:w-full hover:bg-subtle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[.98]" variant="secondary" onClick={() => navigate("/signaler")}>
             <Plus size={19} aria-hidden className="transition-transform duration-200 group-hover:rotate-90" /> Ici c'est inondé
+          </Button>
+          <Button className="group max-md:w-full hover:bg-subtle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[.98]" variant="secondary" onClick={() => navigate("/a-propos#demo")}>
+            <Play size={19} aria-hidden className="transition-transform duration-200 group-hover:scale-110" /> Voir la démo
           </Button>
         </div>
         <p className={cn("flex items-center gap-2 text-[11px] leading-normal text-muted max-md:items-start", REVEAL)} style={revealDelay(240)}>
