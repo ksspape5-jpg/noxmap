@@ -24,7 +24,7 @@ export default function TeamCredits() {
         Une petite équipe, un projet citoyen.
       </h2>
       <p className="mt-3 max-w-190 text-pretty text-[13px] leading-[1.7] text-muted">
-        Points Noirs Dakar est développé par une équipe de 4 personnes, dans le cadre du Hacktoberfest 2026 Dakar.
+        NdoxMap est développé par une équipe de 4 personnes, dans le cadre du Hacktoberfest 2026 Dakar.
       </p>
 
       <div className="mt-6 grid grid-cols-4 gap-3.5 max-md:grid-cols-2">

@@ -22,7 +22,7 @@ export default function ChatHeader({ t, lang, pageLabel, canReset, onToggleLang,
           <Sparkles size={18} />
         </div>
         <div className="min-w-0">
-          <div className="text-[13px] font-bold">Assistant Points Noirs Dakar</div>
+          <div className="text-[13px] font-bold">Assistant NdoxMap</div>
           <div className="truncate text-[10px] opacity-90">
             {t.subtitle} · {pageLabel}
           </div>

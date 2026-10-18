@@ -1,4 +1,4 @@
-# Contribuer à Points Noirs Dakar
+# Contribuer à NdoxMap
 
 Merci de votre intérêt ! Ce projet vise à rendre l'information sur les inondations plus lisible à Dakar.
 En participant, vous vous engagez à garder un comportement respectueux et inclusif envers les autres.
