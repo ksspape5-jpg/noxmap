@@ -2,7 +2,6 @@ import { AlertTriangle } from "lucide-react";
 import Roadmap from "@/shared/roadmap";
 import { ContentPage, PageTitle } from "@/shared/ui";
 import AboutGrid from "./components/AboutGrid";
-import AiPrinciples from "./components/AiPrinciples";
 import HeroSlideshow from "./components/HeroSlideshow";
 import OpenSourceCard from "./components/OpenSourceCard";
 import PrivacyCard from "./components/PrivacyCard";
@@ -31,7 +30,6 @@ export default function AboutPage() {
         <HeroSlideshow />
       </div>
       <AboutGrid />
-      <AiPrinciples />
       <OpenSourceCard />
       <ProjectStatus />
       <PrivacyCard />
