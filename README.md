@@ -1,6 +1,9 @@
 # NdoxMap
+**NdoxMap — Où l’eau monte, on le sait.**
 
 > Voir où l'eau monte. Agir plus vite.
+
+![Capture de NdoxMap](docs/screenshot.jpeg)
 
 Une carte citoyenne des rues inondées à Dakar et dans sa banlieue (Keur Massar, Pikine, Thiaroye, Guédiawaye, Rufisque…), alimentée par les habitants eux-mêmes.
 
@@ -282,6 +285,11 @@ Toutes les contributions sont les bienvenues : code, design, traduction en wolof
 **Ce que l'IA ne fait pas** : elle ne décide jamais seule d'une urgence, elle n'invente pas d'information (elle répond « donnée insuffisante » quand elle ne sait pas) et elle indique toujours un niveau de confiance.
 
 ---
+
+## Équipe et contact
+
+**Équipe :** NdoxMap  
+**Contact :** [Galsen DEV](https://galsen.dev/) ou par e-mail à [hello@galsen.dev](mailto:hello@galsen.dev)
 
 ## Licence
 
