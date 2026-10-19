@@ -1,7 +1,7 @@
 import { useState } from "react";
 import HeroSlideshow from "./HeroSlideshow";
 
-const DEMO_VIDEO_SRC = "/demo.mp4";
+const DEMO_VIDEO_SRC = "/noxmap.mp4";
 
 export default function AboutDemoMedia() {
   const [videoUnavailable, setVideoUnavailable] = useState(false);
